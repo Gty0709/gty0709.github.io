@@ -8,16 +8,16 @@
 #let en = text.with(lang: "en")
 #let zh = text.with(lang: "zh")
 
-// #en[
-//   “My life is dedicated to chasing genius. I don't want to just look up to them, resonate with them, or stand on their shoulders. I want to stand shoulder to shoulder with them. I will spend my life proving that hard work, sweat, focus, and perseverance are far more important than talent and background. The most important thing is that you can definitely catch up with the geniuses by relying on them. When I become a top figure in a certain field, this proof will only be half complete. Only when a second person touches my tombstone, steps over my corpse, looks at my works or articles countless years later, and shares a knowing smile with the long-dead me, giving rise to the idea of chasing genius, will this proof be complete.”
-// //德语版本
+#en[
+  “My life is dedicated to chasing genius. I don't want to just look up to them, resonate with them, or stand on their shoulders. I want to stand shoulder to shoulder with them. I will spend my life proving that hard work, sweat, focus, and perseverance are far more important than talent and background. The most important thing is that you can definitely catch up with the geniuses by relying on them. When I become a top figure in a certain field, this proof will only be half complete. Only when a second person touches my tombstone, steps over my corpse, looks at my works or articles countless years later, and shares a knowing smile with the long-dead me, giving rise to the idea of chasing genius, will this proof be complete.”
+//德语版本
 
-//   _"Mein Leben war der Jagd nach Genies gewidmet, ich will nicht nur zu ihnen aufschauen, ich will nicht nur mit ihnen in Resonanz gehen, ich will nicht nur auf ihren Schultern stehen, ich will Schulter an Schulter mit ihnen stehen; Ich werde mein Leben lang beweisen, dass harte Arbeit, Schweiß, Fokus und Ausdauer viel wichtiger sind als Talent und Herkunft; Das Wichtigste ist, dass Sie die Genies definitiv einholen können, indem Sie sich auf sie verlassen. Wenn ich eine Top-Person in einem Bereich werde, ist dieser Beweis erst zur Hälfte fertig; Dieser Beweis ist erst dann vollständig, wenn eine zweite Person meinen Grabstein berührt, auf meinen Leichnam tritt, unzählige Jahre später meine Schriften oder Artikel anschaut, mich anschaut, der schon lange verstorben ist, wissend lächelt und auf die Idee kommt, ein Genie zu jagen."_
-// ]
+  _"Mein Leben war der Jagd nach Genies gewidmet, ich will nicht nur zu ihnen aufschauen, ich will nicht nur mit ihnen in Resonanz gehen, ich will nicht nur auf ihren Schultern stehen, ich will Schulter an Schulter mit ihnen stehen; Ich werde mein Leben lang beweisen, dass harte Arbeit, Schweiß, Fokus und Ausdauer viel wichtiger sind als Talent und Herkunft; Das Wichtigste ist, dass Sie die Genies definitiv einholen können, indem Sie sich auf sie verlassen. Wenn ich eine Top-Person in einem Bereich werde, ist dieser Beweis erst zur Hälfte fertig; Dieser Beweis ist erst dann vollständig, wenn eine zweite Person meinen Grabstein berührt, auf meinen Leichnam tritt, unzählige Jahre später meine Schriften oder Artikel anschaut, mich anschaut, der schon lange verstorben ist, wissend lächelt und auf die Idee kommt, ein Genie zu jagen."_
+]
 
-// #zh[
-//   “我的一生致力于追逐天才，不想仅仅仰望他们，不想仅仅与他们共鸣，不想仅仅站在他们的肩膀上，我想和他们肩并肩；我将终其一生证明努力，汗水，专注和坚持是远比天资和出身重要，最重要的是，靠着它们一定能追上天才们的步伐；当我成为某个领域的顶尖人物时，这个证明将只完成一半；当且仅当有第二个人摸着我的墓碑，踏着我的尸体前进，在无数年后看着我的著作或文章，和早已逝世的我对视并会心一笑，萌生追逐天才的想法时，这个证明才算完成。”
-// ]
+#zh[
+  “我的一生致力于追逐天才，不想仅仅仰望他们，不想仅仅与他们共鸣，不想仅仅站在他们的肩膀上，我想和他们肩并肩；我将终其一生证明努力，汗水，专注和坚持是远比天资和出身重要，最重要的是，靠着它们一定能追上天才们的步伐；当我成为某个领域的顶尖人物时，这个证明将只完成一半；当且仅当有第二个人摸着我的墓碑，踏着我的尸体前进，在无数年后看着我的著作或文章，和早已逝世的我对视并会心一笑，萌生追逐天才的想法时，这个证明才算完成。”
+]
 
 // #en[
 //   = 2025.08.31 00:32
