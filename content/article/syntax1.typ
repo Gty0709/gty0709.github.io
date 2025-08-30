@@ -7,7 +7,6 @@
   tags: (
     blog-tags.programming,
     blog-tags.typst,
-    blog-tags.introo,
   ),
 )
 // //定义示例块
