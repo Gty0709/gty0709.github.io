@@ -9,6 +9,8 @@
   ),
   show-outline: false,
 )
+= About me
+#include "/content/other/about.typ"
 
 = 个人信息
 
@@ -23,6 +25,5 @@
 - Year：22
 
 
-= About me
 
-#include "/content/other/about.typ"
+
