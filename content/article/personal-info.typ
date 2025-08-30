@@ -1,25 +1,26 @@
 #import "/typ/templates/blog.typ": *
 #show: main.with(
-  title: "A brief introduction",
-  desc: [This is a sketch of my life.],
-  date: "2025-08-30",
+  title: "Personal Information",
+  desc: [This is a test post.],
+  date: "2025-04-25",
   tags: (
     blog-tags.misc,
-    blog-tags.intr,
   ),
   show-outline: false,
 )
+
 = About me
+
 #include "/content/other/about.typ"
 
 = 个人信息
 
-- 名字：官天瑜
-- 生日：7月9日
-- 年龄：22
+- 名字：Miya Reiha
+- 生日：12月24日
+- 年龄：14
 
 = Personal Information
 
-- Name：Tianyu Guan
-- Birthday：7. 9
-- Year：22
+- Name：Miya Reiha
+- Birthday：12. 24
+- Year：14
