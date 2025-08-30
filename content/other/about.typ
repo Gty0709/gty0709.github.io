@@ -19,26 +19,25 @@
   “我的一生致力于追逐天才，不想仅仅仰望他们，不想仅仅与他们共鸣，不想仅仅站在他们的肩膀上，我想和他们肩并肩；我将终其一生证明努力，汗水，专注和坚持是远比天资和出身重要，最重要的是，靠着它们一定能追上天才们的步伐；当我成为某个领域的顶尖人物时，这个证明将只完成一半；当且仅当有第二个人摸着我的墓碑，踏着我的尸体前进，在无数年后看着我的著作或文章，和早已逝世的我对视并会心一笑，萌生追逐天才的想法时，这个证明才算完成。”
 ]
 
-// #en[
-//   = 2025.08.31 00:32
-// ]
+#en[
+  = 2025.08.31 00:32
+]
 
-// #let blog-desc = [
-//   #en[
-//     This blog is aimed at sharing my thoughts and experiences in the fields of mathematics and robotics, haha,the lecture notes mostly.
-//     I was graduated from SCUT in _Jun 30th_, 2025, with a bachelor degree in *civil-engineering*, and now work as a Masterate student in _Tongji_ in intelligent construction. My dream is to turn automation in construction into reality, which acquires a variety of knowledge in robotic and AI. I will continue to learn and post my notes on this
-//     blog. Besides, I fall in love with maths. I will dedicate my spare time to exploring the beauty of mathematics and sharing my viewpoints with others. 
+#en[
+  This blog is aimed at sharing my thoughts and experiences in the fields of mathematics and robotics, haha,the lecture notes mostly.
+  I was graduated from SCUT in _Jun 30th_, 2025, with a bachelor degree in *civil-engineering*, and now work as a Masterate student in _Tongji_ in intelligent construction. My dream is to turn automation in construction into reality, which acquires a variety of knowledge in robotic and AI. I will continue to learn and post my notes on this
+  blog. Besides, I fall in love with maths. I will dedicate my spare time to exploring the beauty of mathematics and sharing my viewpoints with others. 
 
-//     _I Have A Dream, I want to finish my doctoral degree in ETH Zurich of control engineering and robotics in the future. I will try to achieve this goal step by step!_
-//   ]
+  _I Have A Dream, I want to finish my doctoral degree in ETH Zurich of control engineering and robotics in the future. I will try to achieve this goal step by step!_
+]
 
-//   #zh[
-//     这个博客旨在分享我的数学和机器人领域的想法和经验，哈哈，主要是讲义笔记。
-//     我于2025年6月30日毕业于华南理工大学，获得土木工程学士学位，现在是一名同济大学的智能建造专业硕士研究生。我的梦想是将建筑中的自动化变为现实，这需要在机器人和人工智能方面的多种知识。我将继续学习并在这个博客上发布我的笔记。此外，我爱上了数学。我将把业余时间献给探索数学之美，并与他人分享我的观点。
+#zh[
+  这个博客旨在分享我的数学和机器人领域的想法和经验，哈哈，主要是讲义笔记。
+  我于2025年6月30日毕业于华南理工大学，获得土木工程学士学位，现在是一名同济大学的智能建造专业硕士研究生。我的梦想是将建筑中的自动化变为现实，这需要在机器人和人工智能方面的多种知识。我将继续学习并在这个博客上发布我的笔记。此外，我爱上了数学。我将把业余时间献给探索数学之美，并与他人分享我的观点。
 
-//     _我有一个梦想，我希望将来在苏黎世联邦理工学院攻读控制工程和机器人博士学位。我会一步一步地实现这个目标！_
-//   ]
-// ]
+  _我有一个梦想，我希望将来在苏黎世联邦理工学院攻读控制工程和机器人博士学位。我会一步一步地实现这个目标！_
+]
+
 
 // #let self-desc = [
 //   #context if not is-external.get() { blog-desc }
