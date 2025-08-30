@@ -15,8 +15,8 @@
 )
 
 #show: main.with(
-  title: "Typst Syntax111",
-  desc: [List of Typst Syntax, for rendering tests.],
+  title: "TAGS",
+  desc: [The fucking tags.],
   date: "2025-08-30",
   tags: (
     blog-tags.programming,
