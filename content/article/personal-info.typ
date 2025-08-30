@@ -23,7 +23,3 @@
 - Name：Tianyu Guan
 - Birthday：7. 9
 - Year：22
-
-
-
-
