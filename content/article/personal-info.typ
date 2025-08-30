@@ -1,10 +1,11 @@
 #import "/typ/templates/blog.typ": *
 #show: main.with(
-  title: "Personal Information",
-  desc: [This is a test post.],
+  title: "Personally Speaking",
+  desc: [This is a sketch of my spare life.],
   date: "2025-08-31",
   tags: (
     blog-tags.misc,
+    blog-tags.intr,
   ),
   show-outline: true,
 )
