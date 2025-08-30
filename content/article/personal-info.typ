@@ -5,6 +5,7 @@
   date: "2025-08-31",
   tags: (
     blog-tags.misc,
+    blog-tags.intr,
   ),
   show-outline: true,
 )
