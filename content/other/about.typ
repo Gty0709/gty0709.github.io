@@ -38,24 +38,20 @@
   _我有一个梦想，我希望将来在苏黎世联邦理工学院攻读控制工程和机器人博士学位。我会一步一步地实现这个目标！_
 ]
 
+#en[
+  I post my first blog for 2 days because I have known nothing in _javascript_, _css_ and _html_. It's time to say "hello world!".
+  Some new progress will be published here, stay tuned!
+]
 
-// #let self-desc = [
-//   #context if not is-external.get() { blog-desc }
+#zh[
+  我在这里发布我的第一篇博客，居然耗时两天！因为我对 _javascript_、_css_ 和 _html_ 一无所知。是时候说“你好，世界！”了。
+  一些新的进展将在这里发布，敬请期待！
+]
 
-//   #en[
-//     I post my first blog for 2 days because I have known nothing in _javascript_, _css_ and _html_. It's time to say "hello world!".
-//     Some new progress will be published here, stay tuned!
-//   ]
+#link("https://github.com/Gty0709")[GitHub]
 
-//   #zh[
-//     我在这里发布我的第一篇博客，居然耗时两天！因为我对 _javascript_、_css_ 和 _html_ 一无所知。是时候说“你好，世界！”了。
-//     一些新的进展将在这里发布，敬请期待！
-//   ]
+#link("https://space.bilibili.com/288744148")[Bilibili]
 
-//   #link("https://github.com/Gty0709")[GitHub]
-
-//   #link("https://space.bilibili.com/288744148")[Bilibili]
-// ]
 
 // #if sys-is-html-target and show-artwork {
 //   {
@@ -181,12 +177,12 @@
 // //   [= Regional Mirror]
 // // }
 
-// #en[
-//   = 2025.0X.0x
+#en[
+  = 2025.0X.0x
 
-//   to be updated...
-// ]
+  to be updated...
+]
 
-// #zh[
-//   待更新...
-// ]
+#zh[
+  待更新...
+]

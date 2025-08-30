@@ -6,7 +6,7 @@
   tags: (
     blog-tags.misc,
   ),
-  show-outline: false,
+  show-outline: true,
 )
 
 = About me
