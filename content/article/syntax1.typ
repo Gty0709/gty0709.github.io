@@ -1,17 +1,17 @@
 #import "/typ/templates/blog.typ": *
 #let blog-tags = (
-  programming: "Programming",
+  test: "Test",
   typst: "Typst",
-  intr: "Introduction",
+  tem: "Template"
 )
 #show: main.with(
   title: "Typst Syntax111",
-  desc: [List of Typst Syntax, for rendering tests.],
+  desc: [A test blog. List of Typst Syntax, for rendering tests.],
   date: "2025-08-30",
   tags: (
-    blog-tags.programming,
+    blog-tags.test,
     blog-tags.typst,
-    blog-tags.intr,
+    blog-tags.tem
   ),
 )
 //定义示例块

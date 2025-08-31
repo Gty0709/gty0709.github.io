@@ -13,6 +13,8 @@
   misc: "Miscellaneous",
   intr: "Introduction",
   ROS: "ROS",
+  test: "Test",
+  tem: "Template"
 )
 
 #show: main.with(
@@ -33,5 +35,7 @@
     blog-tags.tooling,
     blog-tags.software,
     blog-tags.software-engineering,
+    blog-tags.test,
+    blog-tags.tem
   ),
 )
