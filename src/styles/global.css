@@ -287,3 +287,6 @@ figcaption {
 .block-list.accent > li {
   border-left: 2.5px solid var(--accent);
 }
+/* ////////////////////////////////////////////// */
+/* 保留原有基础样式，修改列表标记相关配置 */
+
