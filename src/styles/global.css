@@ -7,8 +7,6 @@
 @import url('https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/lxgwwenkai-regular.css');
 /* 引入Palatino风格的替代字体（通过Google Fonts CDN） */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
-
-/* 强制使用浅色模式 */
 :root {
   --main-color: #000;
   --main-hover-color: #222939;
@@ -24,17 +22,15 @@
   --body-font-size: 20px; /* 正文字体大小变量 */
 }
 
-/* 禁用深色模式样式 */
 :root.dark {
-  --main-color: #000;
-  --main-hover-color: #222939;
-  --raw-bg-color: rgba(101, 117, 133, 0.16);
-  --main-bg-color: #fafcfc;
-  --nav-bg-color: #fafcfc;
-  --gray-color: #6d6d6d;
-  --accent: #d3006a;
-  --accent-dark: #d30069b3;
-  --black: #0f1219;
+  --main-color: #dfdfd6;
+  --main-hover-color: #fff;
+  --gray-color: #939da3;
+  --raw-bg-color: #65758529;
+  --main-bg-color: #212737;
+  --nav-bg-color: #212737;
+  --accent: #cf829e;
+  --accent-dark: #cf829eb3;
   --chinese-font: "LXGW WenKai", serif;
   --english-font: "Palatino Linotype", "Playfair Display", "Book Antiqua", serif;
   --body-font-size: 20px; /* 正文字体大小变量 */
@@ -294,7 +290,7 @@ figcaption {
 /* ////////////////////////////////////////////// */
 /* 保留原有基础样式，修改列表标记相关配置 */
 
-/* Typst box styles - 严格按照Typst中的颜色设置 */
+/* Typst box styles */
 .typst-box {
   padding: 1em;
   border-radius: 8px;
@@ -303,35 +299,29 @@ figcaption {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* 严格按照Typst中的颜色设置 */
-.typst-example { 
-  background-color: rgb(223, 238, 214); 
-  border-color: rgb(68, 108, 44); 
+/* Light mode colors */
+.typst-example { background-color: rgba(223, 238, 214, 0.6); border-color: rgba(68, 108, 44, 0.7); }
+.typst-definition { background-color: rgba(245, 214, 214, 0.6); border-color: rgba(189, 47, 47, 0.7); }
+.typst-lemma { background-color: rgba(214, 225, 245, 0.6); border-color: rgba(47, 84, 189, 0.7); }
+.typst-solution { background-color: rgba(245, 245, 245, 0.6); border-color: rgba(97, 97, 97, 0.7); }
+.typst-theorem { background-color: rgba(253, 251, 231, 0.6); border-color: rgba(255, 213, 79, 0.7); }
+.typst-proposition { background-color: rgba(243, 234, 247, 0.6); border-color: rgba(171, 71, 188, 0.7); }
+.typst-proof { background-color: rgba(245, 245, 245, 0.6); border-color: rgba(97, 97, 97, 0.7); }
+
+/* Dark mode colors */
+:root.dark .typst-box {
+  background: #23272e;
+  color: #e0e0e0;
+  border-left-color: #888;
 }
-.typst-definition { 
-  background-color: rgb(245, 214, 214); 
-  border-color: rgb(189, 47, 47); 
-}
-.typst-lemma { 
-  background-color: rgb(214, 230, 245); 
-  border-color: rgb(46, 116, 177); 
-}
-.typst-solution { 
-  background-color: transparent; 
-  border-color: rgb(0, 0, 0); 
-}
-.typst-theorem { 
-  background-color: rgb(245, 241, 214); 
-  border-color: rgb(177, 154, 46); 
-}
-.typst-proposition { 
-  background-color: rgb(232, 223, 236); 
-  border-color: rgb(131, 87, 153); 
-}
-.typst-proof { 
-  background-color: rgb(245, 245, 245); 
-  border-color: rgb(0, 0, 0); 
-}
+
+:root.dark .typst-example { background-color: rgba(68, 108, 44, 0.3); border-color: rgba(223, 238, 214, 0.7); }
+:root.dark .typst-definition { background-color: rgba(189, 47, 47, 0.3); border-color: rgba(245, 214, 214, 0.7); }
+:root.dark .typst-lemma { background-color: rgba(47, 84, 189, 0.3); border-color: rgba(214, 225, 245, 0.7); }
+:root.dark .typst-solution { background-color: rgba(97, 97, 97, 0.3); border-color: rgba(245, 245, 245, 0.7); }
+:root.dark .typst-theorem { background-color: rgba(255, 213, 79, 0.3); border-color: rgba(253, 251, 231, 0.7); }
+:root.dark .typst-proposition { background-color: rgba(171, 71, 188, 0.3); border-color: rgba(243, 234, 247, 0.7); }
+:root.dark .typst-proof { background-color: rgba(97, 97, 97, 0.3); border-color: rgba(245, 245, 245, 0.7); }
 
 /* 分级列表符号样式 */
 .typst-list {
