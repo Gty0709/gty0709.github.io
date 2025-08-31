@@ -7,6 +7,8 @@
 @import url('https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/lxgwwenkai-regular.css');
 /* 引入Palatino风格的替代字体（通过Google Fonts CDN） */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+
+/* 强制使用浅色模式 */
 :root {
   --main-color: #000;
   --main-hover-color: #222939;
@@ -22,15 +24,17 @@
   --body-font-size: 20px; /* 正文字体大小变量 */
 }
 
+/* 禁用深色模式样式 */
 :root.dark {
-  --main-color: #dfdfd6;
-  --main-hover-color: #fff;
-  --gray-color: #939da3;
-  --raw-bg-color: #65758529;
-  --main-bg-color: #212737;
-  --nav-bg-color: #212737;
-  --accent: #cf829e;
-  --accent-dark: #cf829eb3;
+  --main-color: #000;
+  --main-hover-color: #222939;
+  --raw-bg-color: rgba(101, 117, 133, 0.16);
+  --main-bg-color: #fafcfc;
+  --nav-bg-color: #fafcfc;
+  --gray-color: #6d6d6d;
+  --accent: #d3006a;
+  --accent-dark: #d30069b3;
+  --black: #0f1219;
   --chinese-font: "LXGW WenKai", serif;
   --english-font: "Palatino Linotype", "Playfair Display", "Book Antiqua", serif;
   --body-font-size: 20px; /* 正文字体大小变量 */
@@ -289,4 +293,128 @@ figcaption {
 }
 /* ////////////////////////////////////////////// */
 /* 保留原有基础样式，修改列表标记相关配置 */
+
+/* Typst box styles - 严格按照Typst中的颜色设置 */
+.typst-box {
+  padding: 1em;
+  border-radius: 8px;
+  margin-bottom: 1em;
+  border: 1px solid;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 严格按照Typst中的颜色设置 */
+.typst-example { 
+  background-color: rgb(223, 238, 214); 
+  border-color: rgb(68, 108, 44); 
+}
+.typst-definition { 
+  background-color: rgb(245, 214, 214); 
+  border-color: rgb(189, 47, 47); 
+}
+.typst-lemma { 
+  background-color: rgb(214, 230, 245); 
+  border-color: rgb(46, 116, 177); 
+}
+.typst-solution { 
+  background-color: transparent; 
+  border-color: rgb(0, 0, 0); 
+}
+.typst-theorem { 
+  background-color: rgb(245, 241, 214); 
+  border-color: rgb(177, 154, 46); 
+}
+.typst-proposition { 
+  background-color: rgb(232, 223, 236); 
+  border-color: rgb(131, 87, 153); 
+}
+.typst-proof { 
+  background-color: rgb(245, 245, 245); 
+  border-color: rgb(0, 0, 0); 
+}
+
+/* 分级列表符号样式 */
+.typst-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.typst-list > li {
+  position: relative;
+  padding-left: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.typst-list > li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--main-color);
+}
+
+.typst-list > li > .typst-list > li::before {
+  content: "◦";
+}
+
+.typst-list > li > .typst-list > li > .typst-list > li::before {
+  content: "▶";
+}
+
+/* 有序列表样式 */
+.typst-enum {
+  list-style: none;
+  padding-left: 0;
+  counter-reset: enum-counter;
+}
+
+.typst-enum > li {
+  position: relative;
+  padding-left: 2em;
+  margin-bottom: 0.5em;
+  counter-increment: enum-counter;
+}
+
+.typst-enum > li::before {
+  content: counter(enum-counter) ".";
+  position: absolute;
+  left: 0;
+  color: var(--main-color);
+  font-weight: bold;
+}
+
+.typst-enum > li > .typst-enum {
+  counter-reset: enum-counter-2;
+}
+
+.typst-enum > li > .typst-enum > li {
+  counter-increment: enum-counter-2;
+}
+
+.typst-enum > li > .typst-enum > li::before {
+  content: "(" counter(enum-counter-2) ")";
+}
+
+.typst-enum > li > .typst-enum > li > .typst-enum {
+  counter-reset: enum-counter-3;
+}
+
+.typst-enum > li > .typst-enum > li > .typst-enum > li {
+  counter-increment: enum-counter-3;
+}
+
+.typst-enum > li > .typst-enum > li > .typst-enum > li::before {
+  content: "①";
+}
+
+.typst-enum > li > .typst-enum > li > .typst-enum > li > .typst-enum {
+  counter-reset: enum-counter-4;
+}
+
+.typst-enum > li > .typst-enum > li > .typst-enum > li > .typst-enum > li {
+  counter-increment: enum-counter-4;
+}
+
+.typst-enum > li > .typst-enum > li > .typst-enum > li > .typst-enum > li::before {
+  content: counter(enum-counter-4, lower-alpha) ".";
+}
 
