@@ -1,16 +1,7 @@
 #import "/typ/templates/blog.typ": *
 #let blog-tags = (
   programming: "Programming",
-  software: "Software",
-  software-engineering: "Software Engineering",
-  tooling: "Tooling",
-  linux: "Linux",
-  dev-ops: "DevOps",
-  compiler: "Compiler",
-  music-theory: "Music Theory",
-  tinymist: "Tinymist",
   typst: "Typst",
-  misc: "Miscellaneous",
   intr: "Introduction",
 )
 #show: main.with(

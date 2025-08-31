@@ -12,6 +12,7 @@
   typst: "Typst",
   misc: "Miscellaneous",
   intr: "Introduction",
+  ROS: "ROS",
 )
 
 #show: main.with(

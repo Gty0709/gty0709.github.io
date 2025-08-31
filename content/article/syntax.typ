@@ -1,9 +1,16 @@
 #import "/typ/templates/blog.typ": *
+#let blog-tags = (
+  ROS: "ROS",
+  programming: "Programming",
+  typst: "Typst",
+)
+
 #show: main.with(
   title: "Typst Syntax",
   desc: [List of Typst Syntax, for rendering tests.],
   date: "2025-05-27",
   tags: (
+    
     blog-tags.programming,
     blog-tags.typst,
   ),
