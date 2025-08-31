@@ -14,7 +14,9 @@
   intr: "Introduction",
   ROS: "ROS",
   test: "Test",
-  tem: "Template"
+  tem: "Template",
+  blog: "Blog",
+  env: "Environment"
 )
 
 #show: main.with(
@@ -36,6 +38,8 @@
     blog-tags.software,
     blog-tags.software-engineering,
     blog-tags.test,
-    blog-tags.tem
+    blog-tags.tem,
+    blog-tags.blog,
+    blog-tags.env
   ),
 )
