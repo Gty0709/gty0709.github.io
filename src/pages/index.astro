@@ -5,6 +5,7 @@ import { RecentComment } from "@myriaddreamin/tylant-comment";
 import { ArchiveList } from "@myriaddreamin/tylant-pdf-archive";
 import { TagList } from "@myriaddreamin/tylant";
 import { renderComment } from "@myriaddreamin/tylant";
+import { TagSidebar } from "$components";
 
 import BaseHead from "$components/BaseHead.astro";
 import Header from "$components/Header.astro";
@@ -65,50 +66,54 @@ const recent5Posts = posts.slice(0, 5);
   </head>
   <body>
     <Header />
-    <main>
-      <section aria-label="Prelude">
-        <h1 set:html={kSiteIndexTitle} />
-        <AboutContent />
-      </section>
-      <section aria-label="Recent Posts">
-        <h2>Recent Posts</h2>
-        <ul class="accent block-list posts">
-          {
-            recent5Posts.map((post) => (
-              <li>
-                <a class="heading" href={`${kUrlBase}/article/${post.id}/`}>
-                  <h2>
-                    <span class="title">{post.data.title}</span>
-                  </h2>
-                  <span class="date">
-                    <FormattedDate date={post.data.date} />
-                  </span>
-                </a>
-                {post.data.tags && <TagList tags={post.data.tags} />}
-                {post.data.description || ""}
-              </li>
-            ))
-          }
-        </ul>
-      </section>
-      {
-        kEnableComment && (
-          <RecentComment
-            kCommentList={kCommentList}
-            renderComment={renderComment}
-          >
-            <fragment slot="articleRef">
-              {(id: string) => (
-                <a class="heading" href={`${kUrlBase}/article/${id}`}>
-                  {posts.find((post) => post.id === id)?.data.title || ""}
-                </a>
-              )}
-            </fragment>
-          </RecentComment>
-        )
-      }
-
-      {kEnableArchive && <ArchiveList pdfArchives={pdfArchives} />}
+    <main style="display: flex; gap: 2em; align-items: flex-start;">
+      <div style="flex: 1 1 25%; min-width: 12em; max-width: 22em;">
+        <TagSidebar />
+      </div>
+      <div style="flex: 3 1 0; min-width: 0;">
+        <section aria-label="Prelude">
+          <h1 set:html={kSiteIndexTitle} />
+          <AboutContent />
+        </section>
+        <section aria-label="Recent Posts">
+          <h2>Recent Posts</h2>
+          <ul class="accent block-list posts">
+            {
+              recent5Posts.map((post) => (
+                <li>
+                  <a class="heading" href={`${kUrlBase}/article/${post.id}/`}>
+                    <h2>
+                      <span class="title">{post.data.title}</span>
+                    </h2>
+                    <span class="date">
+                      <FormattedDate date={post.data.date} />
+                    </span>
+                  </a>
+                  {post.data.tags && <TagList tags={post.data.tags} />}
+                  {post.data.description || ""}
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+        {
+          kEnableComment && (
+            <RecentComment
+              kCommentList={kCommentList}
+              renderComment={renderComment}
+            >
+              <fragment slot="articleRef">
+                {(id: string) => (
+                  <a class="heading" href={`${kUrlBase}/article/${id}`}>
+                    {posts.find((post) => post.id === id)?.data.title || ""}
+                  </a>
+                )}
+              </fragment>
+            </RecentComment>
+          )
+        }
+        {kEnableArchive && <ArchiveList pdfArchives={pdfArchives} />}
+      </div>
     </main>
     <Footer />
   </body>

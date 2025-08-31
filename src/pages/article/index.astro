@@ -8,6 +8,7 @@ import BaseHead from "$components/BaseHead.astro";
 import Footer from "$components/Footer.astro";
 import FormattedDate from "$components/FormattedDate.astro";
 import Header from "$components/Header.astro";
+import { TagSidebar } from "$components";
 
 import { kUrlBase, kSiteTitle, kSiteDescription, kEnableSearch } from "$consts";
 
@@ -16,6 +17,9 @@ import "$styles/IndexPostList.css";
 const posts = (await getCollection("blog")).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
+const url = new URL(Astro.request.url);
+const searchFilter = url.searchParams.get("search");
+const filteredPosts = searchFilter ? posts.filter(post => post.data.tags && post.data.tags.includes(searchFilter)) : posts;
 ---
 
 <!doctype html>
@@ -41,35 +45,40 @@ const posts = (await getCollection("blog")).sort(
   <body>
     <Header />
     {kEnableSearch && <Search />}
-    <main class={kEnableSearch ? "search-enabled" : ""}>
-      <section>
-        <ul class={`accent block-list posts${kEnableSearch ? " loading" : ""}`}>
-          {
-            posts.map((post) => (
-              <li
-                data-article-id={post.id}
-                data-article-meta={JSON.stringify(post.data)}
-              >
-                <a class="heading" href={`${kUrlBase}/article/${post.id}/`}>
-                  <h2>
-                    <span class="title">{post.data.title}</span>
-                  </h2>
-                  <span class="date">
-                    <FormattedDate date={post.data.date} />
-                  </span>
-                </a>
-                {post.data.tags && <TagList tags={post.data.tags} />}
-                {post.data.description || ""}
-              </li>
-            ))
-          }
-        </ul>
-        <script is:inline>
-          if (!window.location.search) {
-            document.querySelector(".posts").classList.remove("loading");
-          }
-        </script>
-      </section>
+    <main style="display: flex; gap: 2em; align-items: flex-start;">
+      <div style="flex: 1 1 20%; min-width: 12em; max-width: 20vw;">
+        <TagSidebar />
+      </div>
+      <div style="flex: 3 1 0; min-width: 0;">
+        <section>
+          <ul class={`accent block-list posts${kEnableSearch ? " loading" : ""}`}>
+            {
+              filteredPosts.map((post) => (
+                <li
+                  data-article-id={post.id}
+                  data-article-meta={JSON.stringify(post.data)}
+                >
+                  <a class="heading" href={`${kUrlBase}/article/${post.id}/`}>
+                    <h2>
+                      <span class="title">{post.data.title}</span>
+                    </h2>
+                    <span class="date">
+                      <FormattedDate date={post.data.date} />
+                    </span>
+                  </a>
+                  {post.data.tags && <TagList tags={post.data.tags} />}
+                  {post.data.description || ""}
+                </li>
+              ))
+            }
+          </ul>
+          <script is:inline>
+            if (!window.location.search) {
+              document.querySelector(".posts").classList.remove("loading");
+            }
+          </script>
+        </section>
+      </div>
     </main>
     <Footer />
   </body>

@@ -12,6 +12,7 @@ import {
   Header,
   LikeReaction,
   PostClick,
+  TagSidebar,
 } from "$components";
 import {
   kEnableClick,
@@ -128,78 +129,83 @@ const pdfArchives = await getCollection("archive");
 
   <body>
     <Header articleId={id || undefined} />
-    <main>
-      <article>
-        <div class="prose">
-          <section class="title" aria-label="Title">
-            <div class="annotation">
-              <div class="date">
-                <FormattedDate date={date} />
+    <main style="display: flex; gap: 2em; align-items: flex-start;">
+      <div style="flex: 1 1 25%; min-width: 12em; max-width: 22em;">
+        <TagSidebar />
+      </div>
+      <div style="flex: 3 1 0; min-width: 0;">
+        <article>
+          <div class="prose">
+            <section class="title" aria-label="Title">
+              <div class="annotation">
+                <div class="date">
+                  <FormattedDate date={date} />
+                  {
+                    updatedDate && (
+                      <>
+                        <span class="last-updated-on">
+                          , Last updated on{" "}
+                          <FormattedDate date={updatedDate || date} />
+                        </span>
+                      </>
+                    )
+                  }
+                </div>
                 {
-                  updatedDate && (
+                  id && kEnableClick && (
                     <>
-                      <span class="last-updated-on">
-                        , Last updated on{" "}
-                        <FormattedDate date={updatedDate || date} />
+                      <span>·</span>
+                      <div class="click-count">
+                        {click} {click === 1 ? "view" : "views"}
+                      </div>
+                    </>
+                  )
+                }
+                {
+                  id && kEnableReaction && (
+                    <>
+                      <span>·</span>
+                      <span class="like-count">
+                        {like} {like === 1 ? "like" : "likes"}
                       </span>
                     </>
                   )
                 }
+                {
+                  id && kEnableReaction && (
+                    <>
+                      <span>·</span>
+                      <LikeReaction articleId={id} />
+                    </>
+                  )
+                }
               </div>
+              <h1>{title}</h1>
               {
-                id && kEnableClick && (
-                  <>
-                    <span>·</span>
-                    <div class="click-count">
-                      {click} {click === 1 ? "view" : "views"}
-                    </div>
-                  </>
+                id && pdfArchives.length > 0 && (
+                  <ArchiveRef
+                    articleId={id || undefined}
+                    pdfArchives={pdfArchives}
+                    {...rest}
+                  />
                 )
               }
-              {
-                id && kEnableReaction && (
-                  <>
-                    <span>·</span>
-                    <span class="like-count">
-                      {like} {like === 1 ? "like" : "likes"}
-                    </span>
-                  </>
-                )
-              }
-              {
-                id && kEnableReaction && (
-                  <>
-                    <span>·</span>
-                    <LikeReaction articleId={id} />
-                  </>
-                )
-              }
-            </div>
-            <h1>{title}</h1>
-            {
-              id && pdfArchives.length > 0 && (
-                <ArchiveRef
-                  articleId={id || undefined}
-                  pdfArchives={pdfArchives}
-                  {...rest}
-                />
-              )
-            }
-            <hr />
-          </section>
-          <slot />
-        </div>
-      </article>
-      {tags && <TagList tags={tags} />}
-      {
-        id && (
-          <CommentList
-            articleId={id}
-            kCommentInfo={kCommentInfo}
-            renderComment={renderComment}
-          />
-        )
-      }
+              <hr />
+            </section>
+            <slot />
+          </div>
+        </article>
+        {tags && <TagList tags={tags} />}
+        {
+          id && (
+            <CommentList
+              articleId={id}
+              kCommentInfo={kCommentInfo}
+              renderComment={renderComment}
+            />
+          )
+        }
+      </div>
     </main>
     <Footer />
   </body>
