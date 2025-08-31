@@ -14,48 +14,48 @@
     blog-tags.tem
   ),
 )
-//定义示例块
-#let Example(body) = if sys-is-html-target {
-  html.elem("div", body, attrs: (class: "typst-box typst-example"))
-} else {
-  box(width: 100%, fill: rgb(223,238,214), stroke:rgb("#446c2c"), radius: 5pt, inset: 10pt, body)
-}
-//定义定义块
-#let Definition(body) = if sys-is-html-target {
-  html.elem("div", body, attrs: (class: "typst-box typst-definition"))
-} else {
-  box(width: 100%, fill: rgb("#f5d6d6"), stroke:rgb("#bd2f2f"), radius: 5pt, inset: 10pt, body)
-}
-//定义引理块
-#let Lemma(body) = if sys-is-html-target {
-  html.elem("div", body, attrs: (class: "typst-box typst-lemma"))
-} else {
-  box(width: 100%, fill: rgb("#d6e6f5"), stroke:rgb("#2e74b1"), radius: 5pt, inset: 10pt, body)
-}
-//定义解题块
-#let Solution(body) = if sys-is-html-target {
-  html.elem("div", body, attrs: (class: "typst-box typst-solution"))
-} else {
-  box(width: 100%, stroke:rgb("#000000"), radius: 5pt, inset: 10pt, body)
-}
-//定义定理块
-#let Theorem(body) = if sys-is-html-target {
-  html.elem("div", body, attrs: (class: "typst-box typst-theorem"))
-} else {
-  box(width: 100%, fill: rgb("#f5f1d6"), stroke:rgb("#b19a2e"), radius: 5pt, inset: 10pt, body)
-}
-//定义推论块
-#let Proposition(body) = if sys-is-html-target {
-  html.elem("div", body, attrs: (class: "typst-box typst-proposition"))
-} else {
-  box(width: 100%, fill: rgb("#e8dfec"), stroke:rgb("#835799"), radius: 5pt, inset: 10pt, body)
-}
-//定义证明块
-#let Proof(body) = if sys-is-html-target {
-  html.elem("div", body, attrs: (class: "typst-box typst-proof"))
-} else {
-  box(width: 100%, fill: rgb("F5F5F5"), stroke:rgb("000000"), radius: 5pt, inset: 10pt, body)
-}
+// //定义示例块
+// #let Example(body) = if sys-is-html-target {
+//   html.elem("div", body, attrs: (class: "typst-box typst-example"))
+// } else {
+//   box(width: 100%, fill: rgb(223,238,214), stroke:rgb("#446c2c"), radius: 5pt, inset: 10pt, body)
+// }
+// //定义定义块
+// #let Definition(body) = if sys-is-html-target {
+//   html.elem("div", body, attrs: (class: "typst-box typst-definition"))
+// } else {
+//   box(width: 100%, fill: rgb("#f5d6d6"), stroke:rgb("#bd2f2f"), radius: 5pt, inset: 10pt, body)
+// }
+// //定义引理块
+// #let Lemma(body) = if sys-is-html-target {
+//   html.elem("div", body, attrs: (class: "typst-box typst-lemma"))
+// } else {
+//   box(width: 100%, fill: rgb("#d6e6f5"), stroke:rgb("#2e74b1"), radius: 5pt, inset: 10pt, body)
+// }
+// //定义解题块
+// #let Solution(body) = if sys-is-html-target {
+//   html.elem("div", body, attrs: (class: "typst-box typst-solution"))
+// } else {
+//   box(width: 100%, stroke:rgb("#000000"), radius: 5pt, inset: 10pt, body)
+// }
+// //定义定理块
+// #let Theorem(body) = if sys-is-html-target {
+//   html.elem("div", body, attrs: (class: "typst-box typst-theorem"))
+// } else {
+//   box(width: 100%, fill: rgb("#f5f1d6"), stroke:rgb("#b19a2e"), radius: 5pt, inset: 10pt, body)
+// }
+// //定义推论块
+// #let Proposition(body) = if sys-is-html-target {
+//   html.elem("div", body, attrs: (class: "typst-box typst-proposition"))
+// } else {
+//   box(width: 100%, fill: rgb("#e8dfec"), stroke:rgb("#835799"), radius: 5pt, inset: 10pt, body)
+// }
+// //定义证明块
+// #let Proof(body) = if sys-is-html-target {
+//   html.elem("div", body, attrs: (class: "typst-box typst-proof"))
+// } else {
+//   box(width: 100%, fill: rgb("F5F5F5"), stroke:rgb("000000"), radius: 5pt, inset: 10pt, body)
+// }
 
 = Raw Blocks
 
