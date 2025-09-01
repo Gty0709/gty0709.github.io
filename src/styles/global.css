@@ -173,6 +173,22 @@ img {
   height: auto;
   border-radius: 8px;
 }
+
+/* Ensure Typst-rendered SVG scales within content container */
+.typst-doc {
+  max-width: 100% !important;
+  width: 100% !important;
+  height: auto !important;
+  display: block;
+}
+
+/* As a safety net, any SVG inside prose also scales */
+.prose svg {
+  max-width: 100% !important;
+  width: 100% !important;
+  height: auto !important;
+  display: block;
+}
 pre,
 code,
 kbd,

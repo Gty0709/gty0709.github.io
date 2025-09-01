@@ -34,7 +34,10 @@
 - 所有Github上的开源项目习惯上来说都需要用Git这个工具来进行管理。
 
 - Git的安装可以参考#link("https://git-scm.com/downloads")[官方下载页面]。
-// #img("/images/article/env/blog/001.png")
+#image("figures/env/blog/001.png")
+//添加图片，链接为：https://raw.githubusercontent.com/Gty0709/BlogFigures/refs/heads/main/env/blog/001.png
+
+// #box("https://raw.githubusercontent.com/Gty0709/BlogFigures/refs/heads/main/env/blog/001.png")
 
 - 选择对应的版本直接开涮
 
