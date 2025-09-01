@@ -36,6 +36,13 @@ const darkIcon =
     padding: 0;
     margin: 0;
     color: var(--main-color);
+    position: relative;
+    z-index: 20;
+  }
+  .icon {
+    position: relative;
+    z-index: 20;
+    pointer-events: auto;
   }
 </style>
 <button id="theme-toggle">
@@ -58,6 +65,47 @@ const darkIcon =
     themeToggle?.addEventListener("click", () => {
       const isDark = document.documentElement.classList.toggle("dark");
       localStorage.setItem("theme", isDark ? "dark" : "light");
+      
+      // 处理typst中box类型的渲染
+      const typstBoxes = document.querySelectorAll('.typst-box');
+      if (typstBoxes) {
+        if (isDark) {
+          // 深色模式下保持原样
+          typstBoxes.forEach(box => {
+            box.style.removeProperty('background-color');
+          });
+        } else {
+          // 浅色模式下严格遵循颜色
+          typstBoxes.forEach(box => {
+            const originalColor = box.getAttribute('data-original-color');
+            if (originalColor) {
+              box.style.backgroundColor = originalColor;
+            }
+          });
+        }
+      }
+    });
+
+    // 初始化时保存原始颜色
+    document.addEventListener('DOMContentLoaded', () => {
+      const typstBoxes = document.querySelectorAll('.typst-box');
+      if (typstBoxes) {
+        typstBoxes.forEach(box => {
+          const computedStyle = window.getComputedStyle(box);
+          const bgColor = computedStyle.backgroundColor;
+          if (bgColor && bgColor !== 'rgba(0, 0, 0, 0)') {
+            box.setAttribute('data-original-color', bgColor);
+          }
+        });
+      }
+
+      // 初始化主题
+      const theme = localStorage.getItem('theme') || 'light';
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
     });
   </script>
 </button>

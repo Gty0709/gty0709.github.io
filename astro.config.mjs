@@ -48,6 +48,15 @@ export default defineConfig({
         default: "html",
         detect: () => "html",
       },
+      // 添加图片路径处理配置
+      assets: {
+        // 将相对路径转换为绝对路径
+        baseUrl: "/",
+        // 允许访问content目录下的图片
+        contentDir: "content",
+        // 启用图片处理
+        processImages: true
+      },
     }),
   ],
 

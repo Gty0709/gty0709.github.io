@@ -5,9 +5,9 @@
   typst: "Typst"
 )
 #show: main.with(
-  title: "001.A Blog wit typst - 使用typst并搭建博客配置教程",
+  title: "001.A Blog with typst - 使用typst并搭建博客配置教程",
   desc: [一个基于typst和Astro模板的建站教程],
-  date: "2025-08-31",
+  date: "2025-05-27",
   tags: (
     blog-tags.env,
     blog-tags.blog,
@@ -34,7 +34,7 @@
 - 所有Github上的开源项目习惯上来说都需要用Git这个工具来进行管理。
 
 - Git的安装可以参考#link("https://git-scm.com/downloads")[官方下载页面]。
-// #image("figures/env/blog/001.png")
+#image("/public/images/article/env/blog/001.png")
 
 - 选择对应的版本直接开涮
 
@@ -43,7 +43,7 @@
 - Node.js是一个JavaScript运行环境，很多现代前端工具都依赖于它。
 
 - Node.js的安装可以参考#link("https://nodejs.org/en/download/")[官方下载页面]。
-// #image("\content\article\figures\env\blog\002.png")
+#image("/public/images/article/env/blog/002.png")
 
 - 选择对应的版本直接开涮
 
@@ -57,7 +57,7 @@
 - `vscode`没有我的建议是*退出*。
 
 - 顺便贴一张我正在使用的截图：
-// #image("\content\article\figures\env\blog\003.jpg")
+#image("/public/images/article/env/blog/003.jpg")
 
 == 2.4.GitHub Action in Vscode(optional)
 - 在`vscode`中使用GitHub Action可以帮助我们更好地管理分支和版本。
@@ -93,17 +93,17 @@
 
 == 3.1.Initialize and Template Creation
 - 首先，创建一个新的文件夹作为你的项目根目录的上一级目录。
-// #image("\content\article\figures\env\blog\004.jpg") 
+#image("/public/images/article/env/blog/004.jpg")
 如上图所示，我创建了一个叫`blog`的文件夹。
 
 - 右键点击，打开"Git Bash Here"。
-// #image("\content\article\figures\env\blog\005.jpg")
+#image("/public/images/article/env/blog/005.jpg")
 
 - 然后去之前提及的模板开源库或我的仓库中克隆项目：
   // ```bash
   // git clone https://github.com/Myriad-Dreamin/tylant.git
   // ```
-  // #image("\content\article\figures\env\blog\006.png")
+  #image("/public/images/article/env/blog/006.png")
   复制该地址，终端输入：
   ```bash
   git clone https://github.com/Myriad-Dreamin/tylant.git
@@ -179,7 +179,7 @@
 
 
 ```
-// #image("\content\article\figures\env\blog\008.jpg")
+#image("/public/images/article/env/blog/008.jpg")
 
 - vscode右上角这个图标能让你看到当前文件的编译效果。对代码做出一些解释：
   - `#import "/typ/templates/blog.typ": *`：导入博客模板。
@@ -223,7 +223,7 @@ SITE="https://{你的用户名}.github.io"
 = 4.Deploy your blog to GitHub Pages
 == 4.1. Create a new repository
 - 创建一个名为`{用户名}.github.io`的仓库，并初始化一个README文件。
-// #image("figures/env/blog/009.png")
+#image("/public/images/article/env/blog/009.png")
 注意在创建仓库的时候，选择`Initialize this repository with a README`，以及命名为`{用户名}.github.io`，若换成其它命名，后面部署的时候会报错。
 
 - Git Bash打开本地项目根目录，先声明添加的用户和邮箱：
@@ -256,7 +256,7 @@ SITE="https://{你的用户名}.github.io"
 - 去到我们仓库的网址，点击`Settings`，找到`GitHub Pages`，选择`Source`，并选择`main`分支，点击`Save`。若让你选择构建方式，则选择`actions`方式，通过工作流构建分支。
 
 - 去到我们仓库的网址，点击`actions`，查看工作流运行情况。对工作流不熟悉不要紧，后续进阶解说我将娓娓道来。你现在只需知道现在界面下有一个名字为`{你的commit字段}`的运行工作流，点击进入工作流，查看运行结果。
-// #image("figures/env/blog/010.png")
+#image("/public/images/article/env/blog/010.png")
 如果成功，应该如图所示的界面，此时在去上一步那样进入`pages`，查看我们的博客网址，点进去就能看到自己的小家了。
 
 == 4.2.Debug
@@ -298,7 +298,7 @@ SITE="https://{你的用户名}.github.io"
 + 权限错误
 
   报错内容找不到了，如果一开始就失败了，请检查工作流权限设置：`settings > actions `，查看是否设置了过于严格的安全权限。我是这么设置之后就解决了问题：
-  // #image("figures/env/blog/011.png")
+  #image("/public/images/article/env/blog/011.png")
 
 + 其余错误
 

@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import { kUrlBase } from "$consts";
+import { ThemeToggle } from "$components";
 
 const posts = await getCollection("blog");
 const tagMap = new Map();
@@ -14,8 +15,11 @@ for (const post of posts) {
 const tags = Array.from(tagMap.entries()).sort((a, b) => b[1] - a[1]);
 ---
 <aside class="tag-sidebar">
-  <h3>Tags</h3>
-  <ul class="tags">
+  <div class="theme-toggle-container">
+    <ThemeToggle />
+  </div>
+  <h3 class="tag-header">Tags <span class="toggle-icon">▼</span></h3>
+  <ul class="tags collapsed">
     {tags.map(([tag, count]) => (
       <li>
         <a href={`${kUrlBase}/article?search=${encodeURIComponent(tag)}`}>{tag}</a>
@@ -24,7 +28,32 @@ const tags = Array.from(tagMap.entries()).sort((a, b) => b[1] - a[1]);
     ))}
   </ul>
 </aside>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const tagHeader = document.querySelector('.tag-header');
+    const tagList = document.querySelector('.tags');
+    const toggleIcon = document.querySelector('.toggle-icon');
+    
+    if (tagHeader && tagList && toggleIcon) {
+      tagHeader.addEventListener('click', () => {
+        tagList.classList.toggle('collapsed');
+        toggleIcon.textContent = tagList.classList.contains('collapsed') ? '▼' : '▲';
+      });
+    }
+  });
+</script>
 <style>
+.theme-toggle-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1em;
+  padding: 0.5em 0;
+  border-bottom: 1px solid rgba(200,200,200,0.18);
+}
+
 .tag-sidebar {
   position: sticky;
   top: 2.5em;
@@ -34,15 +63,16 @@ const tags = Array.from(tagMap.entries()).sort((a, b) => b[1] - a[1]);
   min-width: 8em;
   box-sizing: border-box;
   padding: 1.2em 1em 1em 1em;
-  background: rgba(255, 255, 255, 0.38); /* 更高透明度，更淡白色 */
+  background: rgba(255, 255, 255, 0.38);
   border-radius: 1.2em;
   margin-bottom: 2em;
-  box-shadow: 0 2px 16px 0 rgba(0,0,0,0.08);
+  box-shadow: 0 1px 8px 0 rgba(0,0,0,0.08);
   backdrop-filter: blur(18px) saturate(1.2);
   -webkit-backdrop-filter: blur(18px) saturate(1.2);
   border: 1px solid rgba(200,200,200,0.18);
   z-index: 10;
-  transition: background 0.2s;
+  transition: background 0.2s, width 0.3s ease;
+  font-size: 1em;
 }
 @media (min-width: 900px) {
   .tag-sidebar {
@@ -56,11 +86,27 @@ const tags = Array.from(tagMap.entries()).sort((a, b) => b[1] - a[1]);
   margin-bottom: 0.5em;
   font-size: 1.1em;
   color: var(--accent);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.tag-sidebar .toggle-icon {
+  font-size: 0.8em;
+  transition: transform 0.3s ease;
 }
 .tag-sidebar .tags {
   list-style: none;
   padding: 0;
   margin: 0;
+  max-height: 300px;
+  overflow-y: auto;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+.tag-sidebar .tags.collapsed {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
 }
 .tag-sidebar .tags li {
   display: inline-block;
@@ -70,17 +116,18 @@ const tags = Array.from(tagMap.entries()).sort((a, b) => b[1] - a[1]);
   text-decoration: none;
   color: var(--main-color);
   background: var(--raw-bg-color, rgba(101,117,133,0.10));
-  padding: 0.2em 0.7em;
-  border-radius: 4px;
+  padding: 0.1em 0.35em; /* 缩小为原来的一半 */
+  border-radius: 2px; /* 缩小为原来的一半 */
   transition: background 0.2s, color 0.2s;
+  font-size: 1em;
 }
 .tag-sidebar .tags a:hover {
   background: var(--accent);
   color: #fff;
 }
 .tag-sidebar .tag-count {
-  font-size: 0.9em;
+  font-size: 0.45em; /* 缩小为原来的一半 */
   color: var(--gray-color);
-  margin-left: 0.2em;
+  margin-left: 0.1em; /* 缩小为原来的一半 */
 }
 </style>
