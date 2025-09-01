@@ -62,7 +62,7 @@ const darkIcon =
     const themeToggle = document.getElementById("theme-toggle");
 
     // 统一初始化主题逻辑
-    function applyTheme(theme) {
+    function applyTheme(theme: string) {
       if (theme === "dark") {
         document.documentElement.classList.add("dark");
       } else {
@@ -103,13 +103,13 @@ const darkIcon =
       if (typstBoxes) {
         if (isDark) {
           typstBoxes.forEach(box => {
-            box.style.removeProperty('background-color');
+            (box as HTMLElement).style.removeProperty('background-color');
           });
         } else {
           typstBoxes.forEach(box => {
             const originalColor = box.getAttribute('data-original-color');
             if (originalColor) {
-              box.style.backgroundColor = originalColor;
+              (box as HTMLElement).style.backgroundColor = originalColor;
             }
           });
         }
