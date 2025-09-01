@@ -15,9 +15,6 @@ for (const post of posts) {
 const tags = Array.from(tagMap.entries()).sort((a, b) => b[1] - a[1]);
 ---
 <aside class="tag-sidebar">
-  <div class="theme-toggle-container">
-    <ThemeToggle />
-  </div>
   <h3 class="tag-header">Tags <span class="toggle-icon">▼</span></h3>
   <ul class="tags collapsed">
     {tags.map(([tag, count]) => (
@@ -44,14 +41,11 @@ const tags = Array.from(tagMap.entries()).sort((a, b) => b[1] - a[1]);
   });
 </script>
 <style>
+.theme-label {
+  display: none;
+}
 .theme-toggle-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 1em;
-  padding: 0.5em 0;
-  border-bottom: 1px solid rgba(200,200,200,0.18);
+  display: none;
 }
 
 .tag-sidebar {

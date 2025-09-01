@@ -244,10 +244,10 @@ nav a:hover,
   display: none;
 }
 .dark .theme-icon.dark {
-  display: dark;
+  display: block;
 }
 .theme-icon.light {
-  display: dark;
+  display: block;
 }
 .theme-icon.dark {
   display: none;
