@@ -61,32 +61,16 @@ const darkIcon =
   <script>
     const themeToggle = document.getElementById("theme-toggle");
 
-    // Theme toggle functionality
-    themeToggle?.addEventListener("click", () => {
-      const isDark = document.documentElement.classList.toggle("dark");
-      localStorage.setItem("theme", isDark ? "dark" : "light");
-      
-      // 处理typst中box类型的渲染
-      const typstBoxes = document.querySelectorAll('.typst-box');
-      if (typstBoxes) {
-        if (isDark) {
-          // 深色模式下保持原样
-          typstBoxes.forEach(box => {
-            box.style.removeProperty('background-color');
-          });
-        } else {
-          // 浅色模式下严格遵循颜色
-          typstBoxes.forEach(box => {
-            const originalColor = box.getAttribute('data-original-color');
-            if (originalColor) {
-              box.style.backgroundColor = originalColor;
-            }
-          });
-        }
+    // 统一初始化主题逻辑
+    function applyTheme(theme) {
+      if (theme === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
       }
-    });
+    }
 
-    // 初始化时保存原始颜色
+    // 初始化主题，优先 localStorage，无则跟随系统
     document.addEventListener('DOMContentLoaded', () => {
       const typstBoxes = document.querySelectorAll('.typst-box');
       if (typstBoxes) {
@@ -98,13 +82,37 @@ const darkIcon =
           }
         });
       }
+      let theme = localStorage.getItem('theme');
+      if (!theme) {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          theme = 'dark';
+        } else {
+          theme = 'light';
+        }
+      }
+      applyTheme(theme);
+    });
 
-      // 初始化主题
-      const theme = localStorage.getItem('theme') || 'light';
-      if (theme === 'dark') {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
+    // Theme toggle functionality
+    themeToggle?.addEventListener("click", () => {
+      const isDark = !document.documentElement.classList.contains("dark");
+      applyTheme(isDark ? "dark" : "light");
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+      // 处理typst中box类型的渲染
+      const typstBoxes = document.querySelectorAll('.typst-box');
+      if (typstBoxes) {
+        if (isDark) {
+          typstBoxes.forEach(box => {
+            box.style.removeProperty('background-color');
+          });
+        } else {
+          typstBoxes.forEach(box => {
+            const originalColor = box.getAttribute('data-original-color');
+            if (originalColor) {
+              box.style.backgroundColor = originalColor;
+            }
+          });
+        }
       }
     });
   </script>
