@@ -17,4 +17,4 @@
 
 = 我是标题
 - 我是内容
-#image("001.png")
+#image("figures/001.png")

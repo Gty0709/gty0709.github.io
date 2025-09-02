@@ -48,12 +48,6 @@ export default defineConfig({
         default: "html",
         detect: () => "html",
       },
-      // 添加图片路径处理配置（保留原有配置）
-      assets: {
-        baseUrl: "/",
-        contentDir: "content",
-        processImages: true,
-      },
       // 基于构建环境（GitHub Actions 或本地）重写 Typst 产出的 <img> 路径
       options: {
         cheerio: {
@@ -64,9 +58,9 @@ export default defineConfig({
               $("img").each((_, el) => {
                 const src = $(el).attr("src");
                 if (!src) return;
-                if (src.startsWith("/content/article/")) {
-                  const rel = src.replace(/^\/content\/article\//, "");
-                  $(el).attr("src", base + rel);
+                if (src.startsWith("figures/")) {
+                  // const rel = src.replace(/^\/content\/article\//, "");
+                  $(el).attr("src", base + src);
                 }
               });
             }
