@@ -54,13 +54,15 @@ export default defineConfig({
           postprocess: ($) => {
             const isGh = process.env.GITHUB_ACTIONS === "true" || process.env.TYLANT_GH_RENDER === "true";
             if (isGh) {
-              const base = "https://raw.githubusercontent.com/Gty0709/gty0709.github.io/refs/heads/main/content/article/";
+              const base = "https://github.com/Gty0709/gty0709.github.io/blob/main/content/article/";
               $("img").each((_, el) => {
                 const src = $(el).attr("src");
                 if (!src) return;
-                if (src.startsWith("figures/")) {
-                  // const rel = src.replace(/^\/content\/article\//, "");
-                  $(el).attr("src", base + src);
+                if (src.startsWith("/content/article/")) {
+                  const rel = src.replace(/^\/content\/article\//, "");
+                  $(el).attr("src", base + rel + "?raw=1");
+                } else if (src.startsWith("figures/")) {
+                  $(el).attr("src", base + src + "?raw=1");
                 }
               });
             }
