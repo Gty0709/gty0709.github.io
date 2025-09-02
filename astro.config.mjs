@@ -48,14 +48,31 @@ export default defineConfig({
         default: "html",
         detect: () => "html",
       },
-      // 添加图片路径处理配置
+      // 添加图片路径处理配置（保留原有配置）
       assets: {
-        // 将相对路径转换为绝对路径
         baseUrl: "/",
-        // 允许访问content目录下的图片
         contentDir: "content",
-        // 启用图片处理
-        processImages: true
+        processImages: true,
+      },
+      // 基于构建环境（GitHub Actions 或本地）重写 Typst 产出的 <img> 路径
+      options: {
+        cheerio: {
+          postprocess: ($) => {
+            const isGh = process.env.GITHUB_ACTIONS === "true" || process.env.TYLANT_GH_RENDER === "true";
+            if (isGh) {
+              const base = "https://raw.githubusercontent.com/Gty0709/gty0709.github.io/refs/heads/main/content/article/";
+              $("img").each((_, el) => {
+                const src = $(el).attr("src");
+                if (!src) return;
+                if (src.startsWith("/content/article/")) {
+                  const rel = src.replace(/^\/content\/article\//, "");
+                  $(el).attr("src", base + rel);
+                }
+              });
+            }
+            return $;
+          },
+        },
       },
     }),
   ],
