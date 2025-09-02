@@ -27,7 +27,7 @@
   - 初识`typst`
   - 开源项目的克隆和更新
 
-- 话不多说，上正片：
+- 话不多说，直接上正片：
 = 2.Basic Requirements
 - 本节将聚焦于一些基础软件包的安装。
 == 2.1.Git installation
