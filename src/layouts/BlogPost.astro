@@ -123,6 +123,71 @@ const pdfArchives = await getCollection("archive");
       .outline-item.x-heading-5 {
         margin-left: 4em;
       }
+
+      /* Right-side catalog (Zhihu-like) */
+      .catalog.iscatalog2 {
+        position: fixed;
+        right: clamp(1rem, calc((100vw - 56rem)/2 - 20px), 6rem);
+        top: 92px; /* leave space for header */
+        width: 260px;
+        max-height: calc(100vh - 120px);
+        background: var(--raw-bg-color, #fff);
+        border: 1px solid var(--divider-color, #eaeaea);
+        border-radius: 8px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+        z-index: 40;
+        overflow: hidden;
+      }
+      .catalog-title {
+        padding: 8px 12px;
+        font-size: 0.9rem; /* smaller */
+        color: var(--gray-color);
+        border-bottom: 1px solid var(--divider-color, #eee);
+        user-select: none;
+      }
+      .catalog-list {
+        max-height: calc(100vh - 164px);
+        overflow: auto;
+        padding: 6px 0 8px 0;
+      }
+      .catalog-list-ul {
+        list-style: none;
+        margin: 0;
+        padding: 0 8px 8px 8px;
+      }
+      .catalog-item { margin: 2px 0; }
+      .catalog-link {
+        display: block;
+        text-decoration: none;
+        color: var(--main-color);
+        font-size: 0.9rem; /* smaller text */
+        padding: 3px 8px 3px 10px; /* tighter */
+        border-left: 2px solid transparent;
+        border-radius: 4px;
+        transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        line-height: 1.45;
+        word-break: break-word;
+      }
+      .catalog-link:hover {
+        background: rgba(127,127,127,0.08);
+      }
+      .catalog-item.active > .catalog-link {
+        color: var(--accent);
+        border-left-color: var(--accent);
+        background: rgba(0,0,0,0.04);
+        font-weight: 600;
+      }
+      /* only indent sub headings */
+      .catalog-item.level-1 > .catalog-link { padding-left: 10px; }
+      .catalog-item.level-2 > .catalog-link { padding-left: 22px; }
+      .catalog-item.level-3 > .catalog-link { padding-left: 34px; }
+      .catalog-item.level-4 > .catalog-link { padding-left: 46px; }
+      .catalog-item.level-5 > .catalog-link { padding-left: 58px; }
+
+      /* Responsive: raise threshold to avoid overlapping tag sidebar on init */
+      @media (max-width: 1400px) {
+        .catalog.iscatalog2 { display: none; }
+      }
     </style>
     {id && <PostClick articleId={id} />}
   </head>
@@ -130,10 +195,10 @@ const pdfArchives = await getCollection("archive");
   <body>
     <Header articleId={id || undefined} />
     <main style="display: flex; gap: 2.5em; align-items: flex-start;">
-      <div style="flex: 1 1 20%; min-width: 14em; max-width: 18em;">
+      <div style="flex: 1 1 0; min-width: 12em; order: 2;">
         <TagSidebar />
       </div>
-      <div style="flex: 4 1 0; min-width: 0;">
+      <div style="flex: 5 1 0; min-width: 0; order: 1;">
         <article>
           <div class="prose">
             <section class="title" aria-label="Title">
@@ -207,6 +272,145 @@ const pdfArchives = await getCollection("archive");
         }
       </div>
     </main>
+
+    <!-- Right-side catalog (Zhihu-like) -->
+    <div id="right-catalog" class="catalog iscatalog2" hidden aria-label="目录">
+      <div class="catalog-title">目录</div>
+      <div class="catalog-list"><ul class="catalog-list-ul"></ul></div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const catalog = document.getElementById('right-catalog');
+        const prose = document.querySelector('.prose');
+        if (!catalog || !prose) return;
+
+        const cleanText = (s: string) => {
+          if (!s) return '';
+          // Remove leading "§x."/"§x.x." patterns and following spaces
+          s = s.replace(/^§\s*\d+(?:\.\d+)*\.?\s*/, '');
+          // Collapse multiple spaces
+          s = s.replace(/\s+/g, ' ').trim();
+          return s;
+        };
+
+        // Prefer outline block at article head
+        const outline = prose.querySelector('.outline');
+let items: Array<{ text: string; href: string; level: number }> = [];
+        if (outline) {
+          items = Array.from(outline.querySelectorAll('.outline-item a')).map(a => {
+            const parent = a.parentElement;
+            const m = parent && parent.className && parent.className.match(/x-heading-(\d+)/);
+            const level = m ? parseInt(m[1], 10) : 1;
+            return {
+              text: cleanText((a.textContent || '')),
+              href: a.getAttribute('href') || '',
+              level,
+            };
+          }).filter(it => it.text && it.href);
+        }
+        // Fallback: build from headings if no outline
+        if (!items.length) {
+          const hs = Array.from(prose.querySelectorAll('h1, h2, h3, h4, h5'));
+          items = hs.map(h => {
+            let id = h.id;
+            if (!id) { id = 'auto-' + Math.random().toString(36).slice(2,9); h.id = id; }
+            const level = parseInt(h.tagName.substring(1), 10) || 1;
+            return { text: cleanText(h.textContent || ''), href: '#' + id, level };
+          }).filter(it => it.text && it.href);
+        }
+        if (!items.length) return;
+
+        // Render
+        const ul = catalog.querySelector('.catalog-list-ul');
+        if (!ul) return;
+        ul.innerHTML = '';
+        items.forEach(it => {
+          const li = document.createElement('li');
+          li.className = 'catalog-item level-' + it.level;
+          const a = document.createElement('a');
+          a.className = 'catalog-link';
+          a.href = it.href;
+          a.textContent = it.text;
+          a.addEventListener('click', (e) => {
+            if (a.hash) {
+              const id = decodeURIComponent(a.hash.slice(1));
+              const target = document.getElementById(id);
+              if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                history.replaceState(null, '', a.hash);
+              }
+            }
+          });
+          li.appendChild(a);
+          ul.appendChild(li);
+        });
+        catalog.hidden = false;
+
+        // Active highlight on scroll
+        const listItems = Array.from(ul.querySelectorAll('.catalog-item'));
+        const targets = items.map(it =>
+          it.href && it.href.startsWith('#')
+            ? document.getElementById(decodeURIComponent(it.href.slice(1)))
+            : null
+        );
+
+        const ensureVisible = (index: number) => {
+          const ctn = catalog.querySelector('.catalog-list');
+          const li = listItems[index];
+          if (!ctn || !li) return;
+          const r = li.getBoundingClientRect();
+          const cr = ctn.getBoundingClientRect();
+          if (r.top < cr.top + 24) {
+            ctn.scrollBy({ top: r.top - cr.top - 24, behavior: 'smooth' });
+          } else if (r.bottom > cr.bottom - 24) {
+            ctn.scrollBy({ top: r.bottom - cr.bottom + 24, behavior: 'smooth' });
+          }
+        };
+
+        let active = -1;
+        const setActive = (i: number) => {
+          if (i === active || i < 0 || i >= listItems.length) return;
+          active = i;
+          listItems.forEach((li, idx) => li.classList.toggle('active', idx === i));
+          ensureVisible(i);
+        };
+
+        const byViewportCenter = () => {
+          let idx = 0, best = Infinity;
+          const center = window.innerHeight / 3; // bias to upper third
+          targets.forEach((el, i) => {
+            if (!el) return;
+            const d = Math.abs(el.getBoundingClientRect().top - center);
+            if (d < best) { best = d; idx = i; }
+          });
+          return idx;
+        };
+
+        if ('IntersectionObserver' in window) {
+          const io = new IntersectionObserver((entries) => {
+            let bestIdx = active;
+            let bestTop = Infinity;
+            entries.forEach(en => {
+              const i = targets.indexOf(en.target as HTMLElement);
+              if (i === -1) return;
+              const top = en.target.getBoundingClientRect().top;
+              if (top >= 0 && top < bestTop) { bestTop = top; bestIdx = i; }
+            });
+            if (bestIdx == null || bestIdx < 0) bestIdx = byViewportCenter();
+            setActive(bestIdx);
+          }, { root: null, rootMargin: '0px 0px -66% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] });
+          targets.forEach(el => el && io.observe(el));
+          setActive(byViewportCenter());
+        } else {
+          const onScroll = () => setActive(byViewportCenter());
+          (window as Window).addEventListener('scroll', onScroll, { passive: true });
+          onScroll();
+        }
+      });
+    </script>
+
     <Footer />
   </body>
 </html>
