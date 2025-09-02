@@ -7,7 +7,7 @@
 #show: main.with(
   title: "001.A Blog with typst - 使用typst并搭建博客配置教程",
   desc: [一个基于typst和Astro模板的建站教程],
-  date: "2025-05-27",
+  date: "2025-09-02",
   tags: (
     blog-tags.env,
     blog-tags.blog,

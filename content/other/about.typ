@@ -52,7 +52,15 @@
 
 #link("https://space.bilibili.com/288744148")[Bilibili]
 
+#en[
+  = 2025.09.02 19:47
 
+  It’s finally starting to take shape. Images can only be viewed through links, and after debugging with AI for three days, I still couldn’t figure out why they won’t render. Time is running out, so I had to leave this little issue unresolved. Over the past few days, I’ve managed to add features like a tag sidebar, blog directory, and light/dark theme switching. The color scheme uses research-style palettes, and future math notes will be uploaded with this template. That’s it for now—time to brush up on ROS, C, and C++ these next few days. Graduate school is just around the corner! Let’s keep pushing forward together.
+]
+
+#zh[
+ 终于初具雏形了，图片只能通过链接查看，我和AI Debug 3天都没发现为何不能渲染图片，时间越来越紧，不得不留下个小坑。这几天抽空补充了标签侧边栏，博客目录，深浅色主题切换等功能。色框采用科研配色，后续数学笔记将以这个模板上传。先这样吧，这几天补一下ROS和C语言，C++，马上就要迎来硕士生活了！加油诸位，一起前进。
+]
 // #if sys-is-html-target and show-artwork {
 //   {
 //     show raw: it => html.elem("style", it.text)
