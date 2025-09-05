@@ -16,12 +16,14 @@
   test: "Test",
   tem: "Template",
   blog: "Blog",
-  env: "Environment"
+  env: "Environment",
+  c: "C",
+  cpp: "C++",
 )
 
 #show: main.with(
   title: "TAGS",
-  desc: [The fucking tags.],
+  desc: [The tags.],
   date: "2025-08-30",
   tags: (
     blog-tags.programming,
@@ -40,6 +42,10 @@
     blog-tags.test,
     blog-tags.tem,
     blog-tags.blog,
-    blog-tags.env
+    blog-tags.env,
+    blog-tags.c,
+    blog-tags.cpp,
   ),
+
+  
 )
