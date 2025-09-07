@@ -186,6 +186,16 @@
 // // }
 
 #en[
+  = 2025.09.02 缅怀谢惠民老先生
+
+  An extrodinary old man who is of great wisdom and professionalism has passed away. His concentration on Mathematic teaching do help to a lot of students since 1983 in SuZhou University. His _Problems of Mathematical Analysis_ is a valuable and precious wealth to those who are interested in mathematics but new to it. _Rip_ 
+]
+
+#zh[
+  谢惠民老先生是一位卓越的人，他智慧和专业精神非常出众，但是很遗憾他已于2025年9月2日去世。他自1983年以来在苏州大学专注于数学教学，帮助了许多学生。他的《数学分析问题》对那些对数学感兴趣但初学者来说是一笔宝贵而珍贵的财富。愿他安息。
+]
+
+#en[
   = 2025.0X.0x
 
   to be updated...
