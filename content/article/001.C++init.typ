@@ -15,7 +15,7 @@
 )
 = Perface
 `C++`作为目前工业界的主流，其涉及底层的东西较多，和硬件挂钩，除此以外作为一门低级编程语言，其运算速度相对较快。本人本科曾学习过少量的`C++`,本篇笔记将记录学习过程，重新捡起这个工具（主要是接到项目了）。
-= 1.`C++`基础
+= 1.`C++`语法基础
 依然使用`Visual Studio`作为`IDE`,其对新手友好，无需配置冗杂环境。涉及另一个进阶工具`Cmake`会在后续笔记中涉及。
 == 1.1.`C++`基础语法
   ```cpp
@@ -404,3 +404,605 @@
   ```
   尤其注意：`int c =  ++z * 10;`，`++z`是先加再进行后续运算，意思是`z=z+1`，然后再进行$11*10=110$。而对于`int d = z++ * 10;`，`z++`是先进行后续运算，然后再加一。即`z*10=110`后再`z=z+1`。运行结束后`z=10+1+1`，`c`为`10*（10+1）`，`d`为`11*10`。
   - 取模运算符：`%`，它的经常被用于生成一个范围内的随机数。因为模余输出的数不可能比除数大，通过设立随机数种子并取模余，可以生成0到除数-1范围内的随机数。
+== 1.10.赋值运算符
+  赋值运算符`=`，将右边的值赋给左边的变量。
+  ```cpp
+  #include <iostream>
+  using namespace std;
+  int main() {
+    int a = 0;
+    a = 10;//对a赋值了
+    a += 2;//a=a+2
+    cout << a << endl;
+    a %= 2;
+    cout << a << endl;
+    system("pause");
+    return 0;
+  }
+  ```
+  运行结果：
+  ```bash
+  12
+  0
+  ```
+  - 除此以外还有：
+    - `+=`
+    - `-=`
+    - `*=`
+    - `/=`
+    - `%=`
+  这些算符本质都是一样的，如果`a`是`int`类型，那么`a+=2`等价于`a=a+2`，其它符号则换成对应的运算符即可。
+== 1.11.比较算符
+  比较算符`==`、`!=`、`<`、`>`、`<=`、`>=`，用于比较两个数的大小关系，返回值为`bool`类型，即`true`或`false`。
+  ```cpp
+  #include <iostream>
+  using namespace std;
+  int main() {
+    int a = 4; int b = 3;
+    cout << (a == b) << endl;
+    cout << (a != b) << endl;
+    cout << (a > b) << endl;
+    cout << (a < b) << endl;
+    cout << (a >= b) << endl;
+    cout << (a <= b) << endl;
+    system("pause");
+    return 0;
+  }
+  ```
+  运行结果：
+  ```bash
+  0
+  1
+  1
+  0
+  1
+  0
+  ```
+  逻辑运算符的优先级高于关系运算符，因此先执行逻辑运算符。
+== 1.12.逻辑运算符
+  ```cpp
+  #include <iostream>
+  using namespace std;
+  int main() {
+    int a = 10;int b = 11;int c = 0;
+    cout << !a << endl;
+    cout << !!a << endl;//！a表示非a，！！a表示非非a，即a，此时a为一个命题，而不是单纯的变量赋值
+    //&&表示逻辑与，就是a和b
+    cout << (!a && !b) << endl;
+    cout << (!a && b) << endl;
+    cout << (a && b) << endl;//当中若a=0，则a直接为假
+    cout << "_________________________________________" << endl;
+    cout << (a && c) << endl;
+    cout << (a && !c) << endl;
+    //||表示逻辑或，就是a或b
+    cout << "_________________________________________" << endl;
+    cout << (a || b) << endl;
+    cout << (a || !b) << endl;
+    cout << (!a || !b) << endl;
+    cout << (a || c) << endl;
+    cout << (!a || c) << endl;
+    system("pause");
+    return 0;
+  }
+  ```
+  运行结果：
+  ```bash
+  0
+  1
+  0
+  0
+  1
+  0
+  1
+  1
+  1
+  0
+  1
+  0
+  ```
+  逻辑或非与的具体运算规则可以参考离散数学。两个命题有且仅有一个为假则与命题为假，或命题为真；两命题均真均假则逻辑或与同真假。
+== 1.13.条件语句
+=== 1.13.1.单行`if`语句
+  条件语句关键字`if`，首先是单行`if`语句。
+  ```cpp
+  #include <iostream>
+  using namespace std;
+  int main() {
+    //条件语句的应用，if，首先是单行if语句
+    //输入分数，大于600为一本
+    int a = 0;
+    cout<<"请输入你的分数：" << endl;
+    cin >> a;
+    cout << "你的分数：" <<a<< endl;
+    if (a > 600) 
+    {
+      cout << "恭喜上了一本" << endl;
+    }//注意。if后面不要加分号，否则条件白写。
+    system("pause");
+    return 0;
+  }
+  ```
+  运行结果：
+  ```bash
+  请输入你的分数：
+  600
+  你的分数：600
+  恭喜上了一本
+  ```
+  请注意：
+  - `if`语句后面的大括号`{}`不能省略，否则会报错。
+  - `if`语句后面的条件表达式请不要加分号。
+  - `if`语句最好换行写，这样清晰些。
+=== 1.13.2.`if-else`语句
+  `if-else`语句是`if`语句的扩展，它可以处理两种情况。
+  示例：
+  ```cpp
+  #include <iostream>
+  using namespace std;
+  int main()
+  {
+    int score;
+    cout << "请输入你的分数：" << endl;
+    cin >> score;
+    cout << "你的分数：" << score << endl;
+    if (score >= 600)
+    {
+      cout << "恭喜上了一本" << endl;
+    }
+    else
+    {
+      cout << "请重新考试" << endl;
+    } 
+    system("pause");
+    return 0;
+  }
+  ```
+    运行结果：
+    ```bash
+    请输入你的分数：
+    600
+    你的分数：600
+    恭喜上了一本
+    ```
+    运行结果：
+    ```bash
+    请输入你的分数：
+    500
+    你的分数：500
+    请重新考试
+    ```
+    `else`下执行语句会被执行当且仅当`if`的条件不被满足。
+=== 1.13.3.多条件语句
+  多条件语句`if...else if...else`：允许多个条件判断，当多个条件满足时，执行第一个满足条件的条件块。
+  ```cpp
+  #include <iostream>
+  using namespace std;
+  int main()
+  {
+    int score;
+    cout << "请输入你的分数：" << endl;
+    cin >> score;
+    if (score >= 90)
+    {
+      cout << "你的分数：" << score << endl;
+      cout << "恭喜上了一本" << endl;
+    }
+    else if (score >= 60)
+    {
+      cout << "你的分数：" << score << endl;
+      cout << "恭喜上了二本" << endl;
+    }
+    else
+    {
+      cout << "请重新考试" << endl;
+    }
+    system("pause");
+    return 0;
+  }
+  ```
+  运行结果：
+  ```bash
+  请输入你的分数：
+  90
+  你的分数：90
+  恭喜上了一本
+  ```
+  运行结果：
+  ```bash
+  请输入你的分数：
+  80
+  你的分数：80
+  恭喜上了二本
+  ```
+  运行结果：
+  ```bash
+  请输入你的分数：
+  50
+  你的分数：50
+  请重新考试
+  ```
+  多条件语句`if...else if...else`的注意事项：
+  - `if`语句后面的大括号`{}`不能省略，否则会报错。
+  - `if`语句后面的条件表达式请不要加分号。
+  - `if`语句最好换行写，这样清晰些。
+  + 注意满足第一个条件后后续的执行语句是假执行，不会被执行。当满足条件执行一次执行语句之后，会自动跳出条件判断语句框。
+  + 我们也可以直接在执行语句内使用`return`，需要注意的是，这样将直接跳出一整个函数而不仅是条件语句。
+=== 1.13.4.嵌套条件语句
+  嵌套条件语句是执行语句内再嵌套一层条件语句。常用于复杂的条件判断过程。
+  嵌套条件语句的格式如下：
+  ```c++
+  if(条件1){
+      if(条件2){
+          执行语句1;
+      }else{
+          执行语句2;
+      }
+  }else{
+      执行语句3;
+  }
+  ```
+  具体代码如下：
+  ```cpp
+  #include <iostream>
+  using namespace std;
+  int main() {
+    cout << "请输入高考分数：" << endl;
+    int a = 0;
+    cin >> a;
+    cout << "您输入的高考分数是：" << a << endl;
+    if (a > 600) { 
+      cout << "恭喜考入一本大学" << endl;
+      if (a > 700) {
+        cout << "太强了，上清北" << endl;
+      }
+      else if (a > 650) {
+        cout << "华中五校任调" << endl;
+      }
+      else { cout << "双一流基本稳了" << endl; }
+    }
+    else if (a > 500) { 
+      cout << "恭喜你考入二本大学" << endl; 
+    }
+    else if (a > 400) { 
+      cout << "恭喜你考入san本大学" << endl; 
+    }
+    else { 
+      cout << "请重新考试。" << endl; 
+    }
+    system("pause");
+    return 0;
+  }
+  ```
+  运行结果：
+  ```bash
+  请输入高考分数：
+  600
+  您输入的高考分数是：600
+  恭喜考入一本大学
+  双一流基本稳了
+  ```
+=== 1.13.5.条件语句练习
+  小猪称重，要求输入三只小猪的重量，并判断出哪个小猪最重。
+  具体代码如下：
+  ```cpp
+  #include <iostream>
+  using namespace std;
+  int main() {
+    int a, b, c;
+    cout << "请输入三只小猪的重量：" << endl;
+    cin >> a >> b >> c;
+    if (a > b && a > c) {
+      cout << "小猪A最重" << endl;
+    }
+    else if (b > a && b > c) {
+      cout << "小猪B最重" << endl;
+    }
+    else if (c > a && c > b) {
+      cout << "小猪C最重" << endl;
+    }
+    else {
+      cout << "输入错误" << endl;
+    }
+    system("pause");
+    return 0;
+  }
+  ```
+  输入流`cin`可以连续输入，每输入一次换一行即可。
+  运行结果：
+  ```bash
+  请输入三只小猪的重量：
+  100 200 300
+  小猪C最重
+  ```
+=== 1.13.6.三目运算符
+  三目运算符`? :`，三目运算符的语法格式为：`condition ? true : false`。
+  ```cpp
+  #include <iostream>
+  using namespace std;
+  int main() {
+    //三目运算符：A？B：C，简单的if else语句，A为真执行B，A为假执行C
+    int a = 30;
+    int b = 20;
+    int c = 0;
+    c = ((a > b) ? a : b);
+    cout << c << endl;
+    //三目运算符返回的是变量，可以继续赋值
+    (a > b ? a : b) = 100000;
+    cout << a << endl;
+    cout << b << endl;
+    system("pause");
+    return 0;
+  }
+  ```
+  运行结果：
+  ```bash
+  30
+  100000
+  20
+  ```
+  本质上还是一个条件判断语句，只是将判断语句和执行语句写在一行，方便简洁。
+=== 1.13.7.`switch...case...`语句
+  ```cpp
+  #include <iostream>
+  using namespace std;
+  int main() {
+    //给电影打分10-9好，9以下垃圾
+    //缺点：只能判断整型和字符型，不能判断区间，但是if可以
+    cout<<"请给电影打分：" << endl;
+    int a = 0;
+    cin >> a;
+    switch (a) {
+    case 10:
+      cout<<"经典" << endl;
+      break;//break是断开当前分支
+    case 9:
+      cout << "经典" << endl;
+      break;
+    default:
+      cout << "垃圾" << endl;
+      break;
+    }
+    system("pause");
+    return 0;
+  }
+  ```
+  运行结果：
+  ```bash
+  请给电影打分：
+  10
+  经典
+  ```
+  运行结果：
+  ```bash
+  请给电影打分：
+  9
+  经典
+  ```
+  运行结果：
+  ```bash
+  请给电影打分：
+  8
+  垃圾
+  ```
+  这段代码缺点在于没法判断整数，不适合用于分数。但适合用于程序入口涉及选数字进入不同函数的逻辑。如在某些游戏中。
+== 1.14.循环
+=== 1.14.1.`while`循环
+  `while`循环的语法格式为：
+  ```cpp
+  while(条件){
+      执行语句;
+  }
+  ```
+  具体代码如下：
+  ```cpp
+  #include <iostream>
+  using namespace std;
+  int main() {
+    int a = 0;
+    while (a < 10) {
+      cout << a << endl;
+      a++;
+    }
+    system("pause");
+    return 0;
+  }
+  ```
+  运行结果：
+  ```bash
+  0
+  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+  ```
+=== 1.14.2.猜数字游戏实现
+  现在需要实现一个功能，电脑生成一个1到100间的随机数，然后玩家猜这个数字，每猜一次就电脑就提示偏大偏小或相等。通过这个过程最终引导玩家猜中数字。
+  具体代码如下：
+  ```cpp
+  #include <iostream>
+  #include <ctime>//引用时间库
+  using namespace std;
+  int main() {
+    srand((unsigned int)time(NULL));//防止每一次打开都是同一个数字
+    int a = rand() % 100 + 1;//1-100
+    int b = 0;
+    while (1) {
+      cout << "请输入一个0-100间的整数：" << endl;
+      cin >> b;
+      if (b > a) {
+        cout << "太大了" << endl;
+      }
+      else if (b < a) {
+        cout << "太小了" << endl;
+      }
+      else {
+        cout << "猜对了，666666666666666666666" << endl;
+        break;
+      }
+    };
+    system("pause");
+    return 0;
+  }
+  ```
+  运行结果：
+  ```bash
+  请输入一个0-100间的整数：
+  50
+  太大了
+  请输入一个0-100间的整数：
+  25
+  太大了
+  请输入一个0-100间的整数：
+  12
+  太小了
+  请输入一个0-100间的整数：
+  17
+  太小了
+  请输入一个0-100间的整数：
+  22
+  太小了
+  请输入一个0-100间的整数：
+  23
+  太小了
+  请输入一个0-100间的整数：
+  24
+  猜对了，66666666666666
+  ```
+  - 随机数生成模块：
+    ```cpp
+    srand((unsigned int)time(NULL));//防止每一次打开都是同一个数字
+    int a = rand() % 100 + 1;//1-100
+    ```
+    `srand`函数是用来生成随机数的，`time(NULL)`函数是用来获取当前时间的，`(unsigned int)`是用来将时间转换为无符号整数的，`% 100 + 1`是通过取余数的方式生成1-100的随机数。这段代码将是随机数生成方式的典范。使用`time`需要包含`ctime`头文件。
+  - 循环条件：
+    `while (true)`或`while (1)`是一个死循环，一般用于需要在特定情况下退出循环的场景。
+  - 条件语句下的`break`：
+    `if(){break;}`结构中，可以跳出外层循环，因为条件语句本身无需`break`跳出，而加入`break`后，外侧第一层循环将被跳出。牢记不同嵌套下`break`的作用。
+  - `cin>>`与循环的嵌套：
+    适用于需要不断输入的场景。
+=== 1.14.3.猜数字另解
+  ```cpp
+  #include <iostream>
+  #include <ctime>//引用时间库
+  using namespace std;
+  int main() {
+    srand((unsigned int)time(NULL));//防止每一次打开都是同一个数字
+    int a = rand() % 100 + 1;//1-100
+    int b = 0;
+    cout << "请输入一个0-100间的整数：" << endl;
+    cin >> b;
+    while (b!=a) {
+      if (b > a) {
+        cout << "太大了" << endl;
+      }
+      else if (b < a) {
+        cout << "太小了" << endl;
+      };
+      cout << "请输入一个0-100间的整数：" << endl;
+      cin >> b;
+    };
+    cout << "猜对了，666666666666666666666" << endl;
+    system("pause");
+    return 0;
+  }
+  ```
+  此处有一个耐人寻味的点，`while (b!=a)`中，`!=`是不等于的意思，这个条件判断返回的是一个布尔类型的值，也就是`true`或者`false`。很多项目开发中也经常会使用此技巧来控制循环的。
+  === 1.14.4.`do...while`循环
+  `do...while`循环和`while`循环类似，但是`do...while`循环至少会执行一次，`while`循环不一定会执行一次。
+  ```cpp
+  #include <iostream>
+  using namespace std;
+  int main() {
+    //while循环
+    int a = 0;
+    while (a < 10) {
+      cout << a << endl;
+      a += 1;
+    };
+    system("pause");
+    //do while 循环
+    int b = 0;
+    do {
+      cout << b << endl;
+      b += 1;
+      if (b == a) {
+        break;
+      }
+    } while (b);
+    system("pause");
+    b = 0;
+    while(b) {
+      cout << b << endl;
+      b += 1;
+      if (b == a) {
+        break;
+      }
+    }
+    //区别在于while(变量)，当变量=0时，do while先执行语句，不为零则为真，循环会一直继续，但while会直接判断为假，不执行循环。
+    system("pause");
+    return 0;
+  }
+  ```
+  运行结果：
+  ```bash
+  0
+  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+  0
+  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+  ```
+  为什么第三个循环没有出现呢？
+  因为第三个循环的变量`b=0`，而`while(b)`判断为假，所以不会执行循环。但为什么第二个循环执行了？因为`do{}while()`会先执行一次循环，然后再判断变量是否为真，为真则继续循环，为假则结束循环。本例中，`b=0`但在`do`中直接加了1，因此到条件判断时加了1后`b=1`，因此循环继续执行。
+  - 细品这两个写法的不同，并分别确认适用于什么地方。
+=== 1.14.5.水仙花数的练习
+  - 找出100到1000的水仙花数，满足个位的立方+十位的立方+百位的立方=其本身。
+  ```cpp
+  #include <iostream>
+  using namespace std;
+  int main() {
+    int a = 100;
+    int n1 = 0;
+    int n2 = 0;
+    int n3 = 0;
+    while (a < 1000) {
+      n1 = a % 10;
+      n2 = a / 10 % 10;
+      n3 = a / 100;
+      if (n1*n1*n1+n2*n2*n2+n3*n3*n3== a) {
+        cout << a << endl;
+      };
+      a += 1;
+    };
+    system("pause");
+    return 0;
+  }
+  ```
+  运行结果：
+  ```bash
+  153
+  370
+  371
+  407
+  ```
+  值得注意的一个点
+  - 取出一个数的各个位置：可以用上述取余的方法。 
