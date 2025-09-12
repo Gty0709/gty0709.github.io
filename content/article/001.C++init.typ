@@ -1871,3 +1871,473 @@
     return 0;
   }
   ```
+=== 2.1.5.指针数组
+  ```cpp
+  #include<iostream>
+  using namespace std;
+  int main() {
+    int arr[10] = { 1,2,3,4,56655,6,7,8,9,10 };
+    int* p = arr;//指向首地址，直接相当于指到第一个。
+      cout << *p << endl;
+      cout << *(p + 1) << endl;
+    for (int i = 0; i < sizeof(arr) / sizeof(arr[0]); i++) {
+      cout << *(p + i) << endl;
+      //也可以cout<<*p<<endl;p++;
+    };
+    system("pause");
+    return 0;
+  }
+  ```
+  - 数组名传参是指针。指向首元素地址。
+  - `p++`可以使得指针向下一位移动，每+一次移动4个字节。
+  - 可以通过遍历指针的形式去输出整个数组。
+=== 2.1.6.函数指针
+  之前交换的那个例子。被称作地址传递。
+  ```cpp
+  #include<iostream>
+  using namespace std;
+  void swap(int *p1, int *p2)
+  {
+    int temp = *p1;
+    *p1 = *p2; 
+    *p2 = temp;
+  }
+  int main() {
+    int a = 10;int b = 20;
+    swap(&a, &b);
+    cout << a << "   " << b << endl;//地址可以传递实参。
+    system("pause");
+    return 0;
+  }
+  ```
+  - 函数参数传递分为值传递和地址传递。
+  - 想只改变形参而不改变实参，用值传递。参考交换函数那一章的错误范例。
+  - 改变实参则需要使用地址传递，因此需要指针。
+=== 2.1.6.指针函数数组综合
+  - 请通过值传递函数和地址传递函数分别实现冒泡排序法。
+  - 值传递法：
+    ```cpp
+     //值传递方法
+    #include <iostream>
+    using namespace std;
+    void BubbleArr(int* arr, int len) {
+      for (int i = 0;i < len;i++) {
+        for (int j = 0;j < len - i - 1;j++) {
+          if (arr[j] > arr[j+1]) {
+            int temp = arr[j+1];arr[j+1] = arr[j];arr[j] = temp;
+          }
+        }
+      }
+    }
+    int main() {
+      int arr[] = { 2,31,3,43245432,5,345,1,4,23,4,3,5,4,32,5,43,5,234,5,32,45,234 };
+      int len = sizeof(arr) / sizeof(arr[0]);
+      BubbleArr(arr, len);
+      for (int k = 0;k < len;k++) {
+        cout << arr[k] << endl;
+      };
+      system("pause");
+      return 0;
+    }
+    ```
+    输出结果：
+    ```bash
+    1
+    2
+    3
+    3
+    4
+    4
+    4
+    5
+    5
+    5
+    5
+    5
+    23
+    31
+    32
+    32
+    43
+    45
+    234
+    234
+    345
+    43245432
+    ```
+    地址传递法：
+    ```cpp
+    #include<iostream>
+    using namespace std;
+
+    void BubbleArr(int * arr, int len) {
+      for (int i = 0;i < len - 1;i++) {
+        for (int j = 0;j < len - i - 1;j++) {
+          if (*(arr + j) > *(arr + j + 1)) {
+            int temp = *(arr+j+1);
+            *(arr + j + 1) = *(arr + j);
+            *(arr + j) = temp;
+          }
+        }
+      }
+    }
+    int main() {
+      int arr[] = { 2,31,3,43245432,5,345,1,4,23,4,3,5,4,32,5,43,5,234,5,32,45,234 };
+      int len = sizeof(arr) / sizeof(arr[0]);
+      int* p = arr;
+      BubbleArr(p, len);
+      for (int k = 0;k < len;k++) {
+        cout << arr[k] << endl;
+      };
+      system("pause");
+      return 0;
+    }
+    ```
+    输出结果：
+    ```bash
+    1
+    2
+    3
+    3
+    4
+    4
+    4
+    5
+    5
+    5
+    5
+    5
+    23
+    31
+    32
+    32
+    43
+    45
+    234
+    234
+    345
+    43245432
+    ```
+  - 为何此处值传递依然可以修改数组的排序？因为数组传参本质上传的就是首元素地址。传入的`arr`本质上是指针。因此本质上并不分值传递和地址传递，只是写法不同。
+== 2.2.结构体
+=== 2.2.1.结构体定义
+  结构体，本质上是允许用户自定义一个数据类型为自己所用。是面向对象编程的基石。
+  - 语法：
+    ```cpp
+    struct 结构体名{类型1 成员变量1;类型2 成员变量2;...};
+    ```
+    示例：
+    ```cpp
+    #include<iostream>
+    #include<string>
+    using namespace std;
+    //可以理解为用户创造的一种数据类型。
+    //语法：struct 结构体名 {
+    //	数据类型 成员列表;
+    //}（可选：变量名）;
+    struct student {
+      string name;
+      int age;
+      double score;
+    }s3;
+    int main() {
+      //1.创建变量名，再通过.访问变量属性。
+      struct student s1;
+      s1.name = "bilibili";
+      s1.age = 5;
+      s1.score = 5.0;
+      cout << "姓名:" << s1.name << "年龄:" << s1.age << "分数:" << s1.score << endl;
+      //2.直接上
+      struct student s2 = { "张三",19,100.0 };
+      cout << "姓名:" << s2.name << "年龄:" << s2.age << "分数:" << s2.score << endl;
+      //3.在定义的时候可以直接写。
+      s3.name = "bilibili";s3.age = 5;s3.score = 5.0;
+      cout << "姓名:" << s3.name << "年龄:" << s3.age << "分数:" << s3.score << endl;
+    }//其实struct关键字可以省略。
+    ```
+    - 定义结构体的时候关键字`struct`不可以省略，定义的语法如例子所示。
+    - 实例化一个结构体变量的时候，可以省略结构体的关键字，但是必须使用结构体的名称。有三种实例化方式：
+      + 结构体名 变量名;变量名.成员1 = 值1,变量名.成员2 = 值2,...
+      + 结构体名 变量名 = {值1,值2,值3...};
+      + 定义结构体的末端位置分号前直接添加变量名。后续可以不用声明直接使用：变量名.成员1 = 值1,变量名.成员2 = 值2,...
+=== 2.2.2.结构体数组
+  ```cpp
+  //本质上int arr[]变成struct 名字 arr[]
+  int main() {
+    //结构体数组，和结构体差不多
+    struct student arr[3] = {
+      {"张三",18,100},
+      {"李四",28,327},
+      {"王五",65,888}
+    };//直接创建好结构体数组
+    //可以通过调用索引.成员变量来改变成员值。
+    arr[2].name = "牛逼哥";
+    for (int i = 0;i < sizeof(arr) / sizeof(arr[0]);i++) {
+      cout << arr[i].name << "  " << arr[i].age << "  " << arr[i].score << endl;
+    }
+    system("pause");
+    return 0;
+  }
+  ```
+  输出结果：
+  ```bash
+  张三  18  100
+  李四  28  327
+  牛逼哥  65  888
+  ```
+  - 不要想太复杂，本质上是`int arr[]`改成`struct Student arr[]`，只是数据类型改了，本质上并没有变。结构体变量调用成员变量和数组索引的特性依然没变。
+  - 可以通过数组索引+结构体成员名的方式访问不同结构体变量的不同成员变量。
+=== 2.2.3.结构体指针
+  我们知道要访问结构体中的属性可以通过`变量名.属性名`的方式访问，那么结构体指针呢？可以通过`p->属性名`的方式访问。
+  ```cpp
+  #include<iostream>
+  #include<string>
+  using namespace std;
+  struct student {
+    string name;
+    int age;
+    double score;
+  };
+  int main() {
+    student s = { "牛逼哥",30,70 };
+    student* p = &s;//指针类型为结构体，不能再用int
+    cout << p->name << p->age << p->score << endl;//用->取结构体中的内容。
+    system("pause");
+    return 0;
+  }
+  ```
+  输出结果：
+  ```bash
+  牛逼哥3070
+  ```
+=== 2.2.4.结构体嵌套
+  嵌套结构体，结构体中可以嵌套结构体。比如创立一个结构体老师，老师包含一个结构体学生。
+  ```cpp
+  #include<iostream>
+  #include<string>
+  using namespace std;
+  struct student {
+    string name;
+    int age;
+    double score;
+  };
+  struct teacher {
+    string name;
+    int age;
+    struct student std;
+  };
+  int main() {
+    teacher t = { "卢老师",50,{"官院士",6,100} };
+    //随后输出即可。
+    struct teacher * p = &t;
+    cout << p->name << " " << p->age << " " << p->std.name << " " << p->std.age << " " << p->std.score << endl;
+  }
+  ```
+  输出结果：
+  ```bash
+  卢老师 50 官院士 6 100
+  ```
+=== 2.2.5.结构体函数传参
+  还是值传参和地址传参。
+  ```cpp
+  #include<iostream>
+  #include<string>
+  using namespace std;
+  struct student {
+    string name;
+    int age;
+    double score;
+  };
+  void PrintStudent(string a, int b, double c) {
+    b = 200;//此处实际结构体中的年龄不变
+    cout << "姓名：" << a << "  " << "年龄：" << b << "  " << "分数：" << c << endl;
+    return;
+  }
+  void Print(struct student s1) {
+
+    cout << "姓名：" << s1.name << "  " << "年龄：" << s1.age <<
+      "  " << "分数：" << s1.score << endl;
+  }
+  void Got(struct student* p) {
+    p->age = 200;//改变了结构体中的age
+    cout << "姓名：" << p->name << "  " << "年龄：" << p->age <<
+      "  " << "分数：" << p->score << endl;
+  }
+  int main() {
+    student s1 = { "杀软",-55,0 };
+    PrintStudent(s1.name, s1.age, s1.score);
+    cout << "姓名：" << s1.name << "  " << "年龄：" << s1.age <<
+      "  " << "分数：" << s1.score << endl;
+    Print(s1);
+      cout << "姓名：" << s1.name << "  " << "年龄：" << s1.age <<
+      "  " << "分数：" << s1.score << endl;
+    Got(&s1);
+      cout << "姓名：" << s1.name << "  " << "年龄：" << s1.age <<
+      "  " << "分数：" << s1.score << endl;
+  }
+  ```
+  输出结果：
+  ```bash
+  姓名：杀软  年龄：200  分数：0
+  姓名：杀软  年龄：-55  分数：0
+  姓名：杀软  年龄：-55  分数：0
+  姓名：杀软  年龄：200  分数：0
+  姓名：杀软  年龄：200  分数：0
+  姓名：杀软  年龄：200  分数：0
+  ```
+  可以看到，值传参和地址传参的区别在于，值传参不会改变结构体中的值，而地址传参会改变结构体中的值。
+=== 2.2.6.结构体常量指针
+  我们知道函数传参的时候有值传递和地址传递。那么他们具体的区别在于：
+  - 值传递是通过拷贝原有参数并对拷贝体进行操作的。因此其效率高，但是在大结构体甚至结构体数组中极为耗费内存。
+  - 地址传递是通过指针进行操作的。因此其效率相较于值传递低，但是可以处理大型结构体。防止内存溢出的风险。（指针X86、X64分别占大小4字节、8字节，只移动指针不会改变耗费内存）
+  而我们使用指针传参很容易误操作导致源数据变更，因此我们需要通过设立常量指针防止在函数体中误修改值。
+  ```cpp
+  #include<iostream>
+  using namespace std;
+  struct student {
+    string name;
+    int age;
+    double score;
+  };
+  void Got(const student* p) {
+    p->age = 1919;//报错。
+    cout << "姓名：" << p->name << "  " << "年龄：" << p->age <<
+      "  " << "分数：" << p->score << endl;
+  }
+  int main() {
+    student s1 = { "杀软",-55,0 };
+    Got(&s1);
+    system("pause");
+    return 0;
+  }
+  ```
+  输出结果：
+  ```bash
+  errorE0137:表达式必须是可修改的左值
+  errorC3490:由于正在通过常量对象访问“age”，因此无法对其进行修改。
+  ```		
+  把`p->age = 1919;//报错。`注释掉即可。
+  输出结果：
+  ```bash
+  姓名：杀软  年龄：-55  分数：0
+  ```
+=== 2.2.7.案例1
+  毕设每个老师带着5个学生，请将其描述出来
+  ```cpp
+  #include<iostream>
+  #include<string>
+  #include<ctime>
+  using namespace std;
+  struct student {
+    string name;
+    int age;
+    int score;
+  };
+  struct teacher {
+    string name;
+    struct student sarr[5];
+  };
+  void start(teacher tarr[],int len) {
+    string nameseed = "abcdefghijklmnopqrstuvwxyz";
+    for (int i = 0;i < len;i++) {
+      tarr[i].name = "teacher_";
+      tarr[i].name += nameseed[i];
+      for (int j = 0;j < 5;j++) {
+        tarr[i].sarr[j].name = "student_";
+        tarr[i].sarr[j].name +=nameseed[i*5+j];
+        int random = rand() % 101;//0-100随机数
+        tarr[i].sarr[j].score = random;
+      }
+    };
+  }
+  int main() {
+    srand((unsigned int)time(NULL));
+    teacher tarr[3];
+    int len = sizeof(tarr) / sizeof(tarr[0]);
+    start(tarr, len);
+    for (int i = 0;i < len;i++) {
+      cout << " 老师姓名：" << tarr[i].name << endl;
+      for (int j = 0;j < 5;j++) {
+        cout << "\t学生姓名：" << tarr[i].sarr[j].name << " 学生分数："
+          << tarr[i].sarr[j].score << endl;
+      };
+    };
+    system("pause");
+    return 0;
+  }
+  ```
+  输出结果：
+  ```bash
+  老师姓名：teacher_a
+          学生姓名：student_a 学生分数：62
+          学生姓名：student_b 学生分数：72
+          学生姓名：student_c 学生分数：13
+          学生姓名：student_d 学生分数：9
+          学生姓名：student_e 学生分数：0
+  老师姓名：teacher_b
+          学生姓名：student_f 学生分数：65
+          学生姓名：student_g 学生分数：94
+          学生姓名：student_h 学生分数：81
+          学生姓名：student_i 学生分数：59
+          学生姓名：student_j 学生分数：4
+  老师姓名：teacher_c
+          学生姓名：student_k 学生分数：91
+          学生姓名：student_l 学生分数：86
+          学生姓名：student_m 学生分数：86
+          学生姓名：student_n 学生分数：73
+          学生姓名：student_o 学生分数：39
+  请按任意键继续...
+  ```
+  + 技巧1：设立字符串，通过循环实现变量批量顺序命名，这个技巧对于后续代码复用很重要。
+  + 技巧2：结构体数组值传参法简洁明了，通过嵌套实现链表快速索引。
+  + 技巧3：`srand((unsigned int)time(NULL));`实现随机数生成，控制考试分数。
+=== 2.2.8.案例2
+  创建一个结构体数组，里面包含数个同学的名字和考试分数，请按照升序排列。
+  ```cpp
+  #include<iostream>
+  #include<string>
+  using namespace std;
+  struct Hero {
+    string name;
+    int age;
+  };
+  void POP(struct Hero Harray[], int len) {
+    for (int i = 0;i < len;i++) {
+      for (int j = 0;j < len - i - 1;j++) {
+        if (Harray[j].age > Harray[j + 1].age) {
+          struct Hero Temp = Harray[j + 1];
+          Harray[j + 1] = Harray[j];
+          Harray[j] =Temp;
+        }
+        else {
+          continue;
+        }
+      }
+    }
+  }
+  int main() {
+    Hero Harray[5] = {
+      {"A",24},
+      {"B",44},
+      {"C",7},
+      {"D",99},
+      {"E",74453}
+    };
+    int len = sizeof(Harray) / sizeof(Harray[0]);
+    POP(Harray, len);
+    for (int i = 0;i < len;i++) {
+      cout << "姓名：" << Harray[i].name << "  年龄：" << Harray[i].age << endl;
+    }
+    system("pause");
+    return 0;
+  }
+  ```
+  输出结果：
+  ```bash
+  姓名：C  年龄：7
+  姓名：A  年龄：24
+  姓名：B  年龄：44
+  姓名：D  年龄：99
+  姓名：E  年龄：74453
+  ```
+  - 冒泡排序结合结构体数组的`int`元素。值得一学。将`int array`改为`struct Harray`。
