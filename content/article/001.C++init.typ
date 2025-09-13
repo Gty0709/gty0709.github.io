@@ -2341,3 +2341,352 @@
   姓名：E  年龄：74453
   ```
   - 冒泡排序结合结构体数组的`int`元素。值得一学。将`int array`改为`struct Harray`。
+= 3.通讯录管理系统实战
+== 3.1.从基础入门乱写到项目实战，学会工作空间管理。
+  这一节我们将通过一个`C++`项目实战，来提高工作空间管理能力。本章将不按照视频课的内容对应，代码为头文件源文件和`main`分离的方式，为开发大型项目进行基础知识和实践的衔接。
+== 3.2.项目简介
+  - 通讯录管理系统是一个简单的`C++`项目，用于管理联系人的信息。用户可以添加、删除、修改和查询联系人的信息等。
+  - 项目分为头文件、源文件和`main`函数三部分。头文件包含函数声明和结构体定义，源文件包含函数实现，`main`函数包含程序入口。
+  - 我们知道通讯录的不同的人信息结构一致，人数众多。因此我们选择使用结构体数组来设立人联系信息。
+  - 而通讯录本身需要通讯人信息和一个“指针”——指的是添加到第几个联系人，这个变量将影响多个函数的实现，因此我们通讯录的结构体使用信息构成的结构体数组和一个参数`m_size`，不同的函数操作会导致这个参数动态变化。
+== 3.3.代码简介
+  - 头文件
+    ```cpp
+    <addPerson.h>
+    #pragma once
+    #define MAX 1000//最大人数
+    #include<iostream>
+    #include<string>
+    using namespace std;
+    struct Person {
+        string m_Name;//姓名
+        int m_Sex;//性别 1.男 2.女
+        int m_Age;//年龄
+        string m_Phone;//手机号码
+        string m_Addr;//地址
+    };
+    struct AddressBook {
+        Person personArray[MAX];//通讯录中保存联系人的数组
+        int m_Size;//计数器
+    };
+    void addPerson(AddressBook* Abs);
+
+    <delPerson.h>
+    #pragma once
+    #include "addPerson.h"
+    void delPerson(AddressBook* Abs);
+    int isExist(AddressBook* Abs);
+
+    <findPerson.h>
+    #pragma once
+    #include "addPerson.h"
+    #include "delPerson.h"
+    void findPerson(AddressBook* Abs);
+
+    <modifyPerson.h>
+    #pragma once
+    #include "addPerson.h"
+    #include "delPerson.h"
+    void modifyPerson(AddressBook* Abs);
+
+    <showPerson.h>
+    #pragma once
+    #include "addPerson.h"
+    void showPerson(AddressBook* Abs);
+    ```
+    在第一个功能`addPerson`中，我们定义了结构体。因此后续的头文件都引用它，以增加代码复用，减少重复逻辑。其余头文件各自声明需要用的函数。
+  - 源文件
+    + `addPerson.cpp`
+      代码如下：
+      ```cpp
+      #define _CRT_SECURE_NO_WARNINGS
+      #include <stdio.h>
+      #include <iostream>
+      #include <string>
+      #include "addPerson.h"
+      using namespace std;
+      void printInfo(Person p)
+      {
+          cout << "姓名：" << p.m_Name << "  " << "\t性别：" << ((p.m_Sex == 1) ? "男" : "女") << "  " << "\t年龄：" << p.m_Age << "  " << "\t电话：" << p.m_Phone << "  " << "\t地址：" << p.m_Addr << endl;
+      }
+      //此时这个m_size至关重要。作为后续索引的“指针”
+      void addPerson(AddressBook* Abs)
+      { 
+          if (Abs->m_Size == MAX)
+          {
+              cout << "联系人已满" << endl;
+          }
+          else
+          { 
+              cout << "请输入姓名：" << endl;
+              cin>>Abs->personArray[Abs->m_Size].m_Name;
+              while (1)
+              {
+                  cout << "请输入性别：1.男 2.女" << endl;
+                  cin >> Abs->personArray[Abs->m_Size].m_Sex;
+                  if (Abs->personArray[Abs->m_Size].m_Sex == 1 || Abs->personArray[Abs->m_Size].m_Sex == 2)
+                  {
+                      break;
+                  }
+                  else
+                      cout << "输入错误，请重新输入" << endl;
+              }
+              cout << "请输入年龄：" << endl;
+              cin >> Abs->personArray[Abs->m_Size].m_Age;
+              while (1)
+              {
+                  cout << "请输入手机号：" << endl;
+                  cin >> Abs->personArray[Abs->m_Size].m_Phone;
+                  if (sizeof(Abs->personArray[Abs->m_Size].m_Phone) == 40)
+                      break;
+                  else
+                      cout << "输入错误，请重新输入" << endl;
+              }
+              cout << "请输入住址：" << endl;
+              cin  >> Abs->personArray[Abs->m_Size].m_Addr;
+              system("cls");//清除上方冗余信息
+              printInfo(Abs->personArray[Abs->m_Size]);
+              cout << "已添加联系人" << endl;
+              Abs->m_Size++; 
+          }
+      }
+      ```
+      - 此时结构体的`m_size`参数派上用场了。我们用它来索引最新的联系人。
+      - 函数传参使用地址传参方式，传入通讯录结构体数组地址，通过指针访问嵌套下的结构体数组以及索引。
+    + `delPerson.cpp`
+      代码如下：
+      ```cpp
+      #define _CRT_SECURE_NO_WARNINGS
+      #include "addPerson.h"
+      #include "delPerson.h"
+      int isExist(AddressBook* Abs)
+      {
+        if (Abs->m_Size == 0)
+        {
+          system("cls");
+              cout << "没有联系人,请添加联系人后再进行该操作。" << endl;
+          //system("cls");
+              return -1;
+        }
+        else
+        {
+          string name;
+          cout << "请输入要操作的联系人姓名：" << endl;
+          cin >> name;
+          for (int i = 0; i < Abs->m_Size; i++)
+          {
+            if (name == Abs->personArray[i].m_Name)
+            {
+              return i;
+            }
+            else
+            {
+              continue;
+            }
+            if (i == Abs->m_Size - 1)
+            {
+              cout << "没有此联系人,请重新输入" << endl;
+              return -1;
+            }
+          }
+        }
+      }
+      ```
+      - 函数中调用`isExist`函数，判断联系人是否存在。
+      - 该函数复用率高，因此在对应头文件中同样进行声明
+    + `findPerson.cpp`
+      代码如下：
+      ```cpp
+      #define _CRT_SECURE_NO_WARNINGS
+      //#include "delPerson.h"
+      #include "findPerson.h"
+      void findPerson(AddressBook* Abs)
+      {
+        int index = isExist(Abs);
+          if (index != -1)
+          { 
+              cout << "已找到该联系人" << endl;
+              cout << "姓名：" << Abs->personArray[index].m_Name << "\t";
+              cout << "性别：" << ((Abs->personArray[index].m_Sex == 1) ? "男" : "女") << "\t";
+              cout << "年龄：" << Abs->personArray[index].m_Age << "\t";
+              cout << "电话：" << Abs->personArray[index].m_Phone << "\t";
+              cout << "地址：" << Abs->personArray[index].m_Addr << endl;
+          }
+      }
+      ```
+    + `modifyPerson.cpp`
+      代码如下：
+      ```cpp
+      #define _CRT_SECURE_NO_WARNINGS
+      #include "modifyPerson.h"
+      void modifyPerson(AddressBook* Abs)
+      { 
+        int index=isExist(Abs);
+        if(index!=-1)
+        { 
+              cout<<"变更信息前此人的信息："<<endl;
+              cout << "姓名：" << Abs->personArray[index].m_Name << "\t";
+              cout << "性别：" << ((Abs->personArray[index].m_Sex == 1) ? "男" : "女") << "\t";
+              cout << "年龄：" << Abs->personArray[index].m_Age << "\t";
+              cout << "电话：" << Abs->personArray[index].m_Phone << "\t";
+              cout << "地址：" << Abs->personArray[index].m_Addr << endl;
+              cout<<"请输入修改的姓名："<<endl;
+              cin>>Abs->personArray[index].m_Name;
+              cout<<"请输入修改的性别："<<endl;
+              cin>>Abs->personArray[index].m_Sex;
+              cout<<"请输入修改的电话："<<endl;
+              cin>>Abs->personArray[index].m_Phone;
+              cout<<"请输入修改的住址："<<endl;
+              cin>>Abs->personArray[index].m_Addr;
+              cout<<"信息变更成功！"<<endl;
+              cout << "变更信息后此人的信息：" << endl;
+              cout << "姓名：" << Abs->personArray[index].m_Name << "\t";
+              cout << "性别：" << ((Abs->personArray[index].m_Sex == 1) ? "男" : "女") << "\t";
+              cout << "年龄：" << Abs->personArray[index].m_Age << "\t";
+              cout << "电话：" << Abs->personArray[index].m_Phone << "\t";
+              cout << "地址：" << Abs->personArray[index].m_Addr << endl;
+        }
+      }
+      ```
+    + `showPerson.cpp`
+      代码如下：
+      ```cpp
+      #define _CRT_SECURE_NO_WARNINGS
+      #include "addPerson.h"
+      #include "showPerson.h"
+      void showPerson(AddressBook* Abs)
+      {	
+        if (Abs->m_Size == 0)
+        {
+          cout << "没有联系人！" << endl;
+          system("pause");
+        }
+        else
+        {
+          for (int i = 0; i < Abs->m_Size; i++)
+          {
+            cout << "姓名：" << Abs->personArray[i].m_Name << "\t" << "性别：" << ((Abs->personArray[i].m_Sex == 1) ? "男" : "女") << "\t" << "年龄：" << Abs->personArray[i].m_Age << "\t" << "电话：" << Abs->personArray[i].m_Phone << "\t" << "地址：" << Abs->personArray[i].m_Addr << endl;
+          }
+          cout << "显示完毕！" << endl;
+        }
+          system("pause");
+        system("cls");//清除上方冗余信息
+      }
+      ```
+  - 主函数
+    ```cpp
+    #define _CRT_SECURE_NO_WARNINGS
+    #include <iostream>
+    #include <string>
+    #include "addPerson.h"
+    #include "showPerson.h"
+    #include "delPerson.h"
+    #include "findPerson.h"
+    #include "modifyPerson.h"
+    using namespace std;
+    //通讯录管理系统：
+    //通讯录是实现记录亲友信息的工具，本教程项目利用C++来实现一个通讯录管理系统。
+    //1.添加联系人：向通讯录中添加新的联系人，包括姓名、性别、年龄、电话、地址等信息。最多记录1000人
+    //2.显示联系人：显示所有联系人信息
+    //3.删除联系人：删除指定姓名联系人
+    //4.查找联系人：根据姓名查找联系人
+    //5.修改联系人：修改指定姓名联系人的资料
+    //6.清空联系人：清空所有联系人
+    //7.退出通讯录：退出通讯录系统
+    /////////////////////////////////////////
+    //第一步：封装一个menu函数，实现菜单功能，根据不同输入的菜单选项，调用不同的功能函数
+    /////////////////////////////////////////
+    //第二步：封装add  函数，实现添加联系人功能。
+    // 1.设计数据结构，main中实例化通讯录结构体，实例化联系人结构体。将常量和结构体在头文件中定义，方便调用。
+    // 2.封装add，并测试
+    /////////////////////////////////////////
+    //第三步：封装show函数，实现显示联系人功能。
+    // 1.封装show，并测试
+    //////////
+    //第四步：封装del函数，实现删除联系人功能。
+    // 1.检测联系人是否存在，在则返回数组索引，不存在则返回-1
+    // 2.删除联系人，并返回删除联系人的索引
+    ```
+    ```cpp
+    /////////////
+    //第五步：封装find函数，实现查找联系人功能。
+    //第六步：封装modify函数，实现修改联系人功能。
+    //第七步，直接使m_size置0，则所有联系人将被清空，体会一下其中的妙处。
+
+    void menu() 
+    {
+      cout<<"**************************************"<<endl;
+        cout<<"*****         1.添加联系人        *****"<<endl;
+        cout<<"*****         2.显示联系人        *****"<<endl;
+        cout<<"*****         3.删除联系人        *****"<<endl;
+        cout<<"*****         4.查找联系人        *****"<<endl;
+        cout<<"*****         5.修改联系人        *****"<<endl;
+        cout<<"*****         6.清空联系人        *****"<<endl;
+        cout<<"*****         0.退出通讯录        *****"<<endl;
+        cout << "**************************************" << endl;
+    }
+    int choice()
+    {
+        int choice;
+        cout << "请输入你的选择：" << endl;
+        cin >> choice;
+        return choice;
+    }
+    int main()
+    {
+        /////实例化通讯录结构体
+        AddressBook abs;
+        ////////初始化当前联系人个数
+        abs.m_Size = 0;
+        ///////////////////////
+        while (1)
+        {
+            menu();
+            int a = choice();
+            switch (a)
+            {
+            case 1:
+                /////////通讯录中加入人
+                addPerson(&abs);//需要传入地址，否则无法改动
+                //cout << "已添加联系人" << endl;//测试语句
+                break;
+            case 2:
+                showPerson(&abs);
+                //cout << "显示联系人" << endl;//测试语句
+                break;
+            case 5:
+                modifyPerson(&abs);
+                //cout << "修改联系人" << endl;
+                break;
+            case 3:
+                delPerson(&abs);
+                //cout << "删除联系人" << endl;
+                break;
+            case 4:
+                findPerson(&abs);
+                //cout << "查找联系人" << endl;
+                break;
+    ```
+    ```cpp
+            case 6:
+                abs.m_Size = 0;
+                cout << "已清空" << endl;
+                break;
+            case 0:
+                cout << "已退出通讯录" << endl;
+                return 0;
+            default:
+                cout << "输入错误，请重新输入" << endl;
+                continue;
+            }
+        }
+        //delete abs;
+        system("pause");
+        return 0;
+    }
+    ```
+== 3.4.编写思路
+  + 先封装`menu`，这是每个程序的测试入口。
+  + 然后设计数据类型，确定最终的数据交互范式。
+  + 开始按照要求逐步插入功能。注意一个功能对应一个头文件。头文件中声明可供外部调用的函数。而源文件中的具体函数实现后续会被编译为`dll`文件或`lib`文件。这是为了保护劳动成果所设立的。难以从编译后的链接库去获取原函数。
+  
