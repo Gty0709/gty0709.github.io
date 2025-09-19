@@ -19,6 +19,7 @@
   env: "Environment",
   c: "C",
   cpp: "C++",
+  math:"Math",
 )
 
 #show: main.with(
@@ -45,6 +46,7 @@
     blog-tags.env,
     blog-tags.c,
     blog-tags.cpp,
+    blog-tags.math,
   ),
 
   
