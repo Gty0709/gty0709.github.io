@@ -35,6 +35,7 @@
 
 - Git的安装可以参考#link("https://git-scm.com/downloads")[官方下载页面]。
 #image("figures/env/blog/001.png")
+#figure(code-image(image("figures/env/blog/001.png")))
 #link("https://raw.githubusercontent.com/Gty0709/gty0709.github.io/refs/heads/main/content/article/figures/env/blog/001.png")[001.png]
 
 
