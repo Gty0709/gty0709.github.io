@@ -20,6 +20,7 @@
   c: "C",
   cpp: "C++",
   math:"Math",
+  slam:"SLAM",
 )
 
 #show: main.with(
@@ -47,6 +48,7 @@
     blog-tags.c,
     blog-tags.cpp,
     blog-tags.math,
+    blog-tags.slam,
   ),
 
   
