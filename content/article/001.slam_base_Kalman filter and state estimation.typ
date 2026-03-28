@@ -5,7 +5,7 @@
 )
 
 #show: main.with(
-  title: "MonoSLAM中的卡尔曼滤波详解",
+  title: "kalman filter and state estimation",
   desc: [从符号推导到数值案例，深入理解MonoSLAM中的EKF状态估计方法。],
   date: "2025-05-27",
   tags: (
@@ -53,7 +53,7 @@ $ x_(k+1) = f(x_k) + w_k $
 
 对于匀速运动模型：
 $ r_(k+1) = r_k + v_k Delta t $
-$ q_(k+1) = q_k times.o e^(omega_k Delta t\/2) $
+$ q_(k+1) = q_k times.circle e^(omega_k Delta t\/2) $
 $ v_(k+1) = v_k $
 $ omega_(k+1) = omega_k $
 $ y_(i,k+1) = y_(i,k) $（地图点假设为静态）
@@ -86,7 +86,7 @@ $ x_c = vec(r, q, v, omega) $
 == 2.2. 协方差矩阵与噪声模型
 === 初始协方差矩阵 $P_0$
 $P_0$为$(13+3N) times (13+3N)$维的对角矩阵，表示初始状态的不确定性：
-$ P_0 = mat(P_r, 0, 0, dots; 0, P_q, 0, dots; 0, 0, P_v, dots; dots.v, dots, P_(y_N)) $
+$ P_0 = mat(P_r, 0, 0, dots.h; 0, P_q, 0, dots.h; 0, 0, P_v, dots.h; dots.v, dots.v, dots.v, P_(y_N)) $
 
 对角线元素反映了各状态分量的初始不确定性（方差）。
 
@@ -149,7 +149,7 @@ $ K = P_("pred") H^T S^(-1) $
 == 2.3. 运动模型假设
 假设运动模型为匀速运动模型：
 $ r_(k+1) = r_k + v_k Delta t $
-$ q_(k+1) = q_k times.o e^(omega_k Delta t\/2) $
+$ q_(k+1) = q_k times.circle e^(omega_k Delta t\/2) $
 $ v_(k+1) = v_k $
 $ omega_(k+1) = omega_k $
 $ y_(k+1) = y_k $
@@ -212,7 +212,7 @@ $ omega_0 = vec(0.0, 0.0, 0.0) quad $（无角速度）
 
 === 噪声参数
 *过程噪声协方差$Q$*：
-$ Q = mat(0.01, 0, 0, dots; 0, 0.001, 0, dots; 0, 0, 0.1, dots; dots.v, dots, 0.1) $
+$ Q = mat(0.01, 0, 0, dots.h; 0, 0.001, 0, dots.h; 0, 0, 0.1, dots.h; dots.v, dots.v, dots.v, 0.1) $
 
 各分量含义：位置噪声$0.01 m^2$，姿态噪声$0.001 "rad"^2$，速度噪声$0.1 m^2\/s^2$，角速度噪声$0.01 "rad"^2\/s^2$，地图点噪声$0.1 m^2$。
 
@@ -232,7 +232,7 @@ $ x_0 = vec(0.0, 0.0, 0.5, 1.0, 0.0, 0.0, 0.0, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, ...
 
 === 初始协方差矩阵$P_0$
 $25 times 25$对角矩阵：
-$ P_0 = mat(0.01, 0, 0, dots; 0, 0.001, 0, dots; 0, 0, 0.1, dots; dots.v, dots, 0.1) $
+$ P_0 = mat(0.01, 0, 0, dots.h; 0, 0.001, 0, dots.h; 0, 0, 0.1, dots.h; dots.v, dots.v, dots.v, 0.1) $
 
 各分量：位置$0.01$，四元数$0.001$，速度$0.1$，角速度$0.01$，地图点$0.1$。
 
@@ -256,7 +256,7 @@ $ P_0 = mat(0.01, 0, 0, dots; 0, 0.001, 0, dots; 0, 0, 0.1, dots; dots.v, dots, 
 === 预测步骤
 ==== 运动模型预测
 $ r_(1|0) = r_0 + v_0 Delta t = vec(0.0, 0.0, 0.5) + vec(0.1, 0.0, 0.0) times 0.0333 = vec(0.00333, 0.0, 0.5) $
-$ q_(1|0) = q_0 times.o e^(omega_0 Delta t\/2) = q_0 $（无旋转）
+$ q_(1|0) = q_0 times.circle e^(omega_0 Delta t\/2) = q_0 $（无旋转）
 $ v_(1|0) = v_0 = vec(0.1, 0.0, 0.0) $
 $ omega_(1|0) = omega_0 = vec(0.0, 0.0, 0.0) $
 地图点不变：$y_(i,1|0) = y_(i,0)$
