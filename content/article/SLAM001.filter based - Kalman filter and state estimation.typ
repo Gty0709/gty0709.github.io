@@ -5,9 +5,9 @@
 )
 
 #show: main.with(
-  title: "kalman filter and state estimation",
+  title: "SLAM001.filter based - Kalman filter and state estimation",
   desc: [从符号推导到数值案例，深入理解MonoSLAM中的EKF状态估计方法。],
-  date: "2025-05-27",
+  date: "2026-03-27",
   tags: (
     blog-tags.ROS,
     blog-tags.slam,
