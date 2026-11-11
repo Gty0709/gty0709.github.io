@@ -204,3 +204,13 @@
 #zh[
   待更新...
 ]
+
+#en[
+  = 2026.11.09
+
+  Received a university-level scholarship from Tongji University.
+]
+
+#zh[
+  获得同济大学校级奖学金。
+]
