@@ -62,17 +62,113 @@ const recent5Posts = posts.slice(0, 5);
       .monthly li {
         font-style: italic;
       }
+      .home-contact {
+        margin: 0 0 1.75em;
+        padding: 0.85em 1em 1em;
+        border-left: 2.5px solid var(--accent);
+        background: var(--raw-bg-color);
+        border-radius: 0 8px 8px 0;
+      }
+      .home-contact h2 {
+        margin: 0 0 0.35em;
+        font-size: 1.35em;
+        line-height: 1.3;
+      }
+      .home-contact-name {
+        margin: 0 0 0.65em;
+        font-weight: 700;
+      }
+      .home-contact-name [lang="zh"]::before {
+        content: " / ";
+        font-weight: 400;
+      }
+      .home-contact-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.55em;
+      }
+      .home-contact-list li {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 0.2em 0.75em;
+        margin: 0;
+      }
+      .home-contact-label {
+        flex: 0 0 auto;
+        min-width: 7.5em;
+        color: var(--gray-color);
+        font-size: 0.9em;
+      }
+      .home-contact-list a {
+        overflow-wrap: anywhere;
+        text-underline-offset: 0.15em;
+      }
+      .home-layout {
+        display: flex;
+        gap: 2.5em;
+        align-items: flex-start;
+      }
+      .home-aside {
+        flex: 1 1 0;
+        min-width: 12em;
+        order: 2;
+      }
+      .home-primary {
+        flex: 5 1 0;
+        min-width: 0;
+        order: 1;
+      }
+      @media (max-width: 720px) {
+        .home-layout {
+          flex-direction: column;
+          gap: 1.5em;
+        }
+        .home-aside,
+        .home-primary {
+          flex: none;
+          width: 100%;
+          min-width: 0;
+        }
+        .home-contact {
+          padding: 0.75em 0.85em 0.9em;
+        }
+        .home-contact-list li {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.1em;
+        }
+      }
     </style>
   </head>
   <body>
     <Header />
-    <main style="display: flex; gap: 2.5em; align-items: flex-start;">
-      <div style="flex: 1 1 0; min-width: 12em; order: 2;">
+    <main class="home-layout">
+      <div class="home-aside">
         <TagSidebar />
       </div>
-      <div style="flex: 5 1 0; min-width: 0; order: 1;">
+      <div class="home-primary">
         <section aria-label="Prelude">
           <h1 set:html={kSiteIndexTitle} />
+          <section class="home-contact" aria-labelledby="home-contact-heading">
+            <h2 id="home-contact-heading">Contact</h2>
+            <p class="home-contact-name">
+              <span lang="en">Tianyu Guan</span><span lang="zh">官天瑜</span>
+            </p>
+            <ul class="home-contact-list">
+              <li>
+                <span class="home-contact-label">Primary</span>
+                <a href="mailto:3186610091gty@gmail.com">3186610091gty@gmail.com</a>
+              </li>
+              <li>
+                <span class="home-contact-label">Institutional</span>
+                <a href="mailto:2530870@tongji.edu.cn">2530870@tongji.edu.cn</a>
+              </li>
+            </ul>
+          </section>
           <AboutContent />
         </section>
         <section aria-label="Recent Posts">
