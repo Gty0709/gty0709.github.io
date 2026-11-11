@@ -107,32 +107,7 @@ const recent5Posts = posts.slice(0, 5);
         overflow-wrap: anywhere;
         text-underline-offset: 0.15em;
       }
-      .home-layout {
-        display: flex;
-        gap: 2.5em;
-        align-items: flex-start;
-      }
-      .home-aside {
-        flex: 1 1 0;
-        min-width: 12em;
-        order: 2;
-      }
-      .home-primary {
-        flex: 5 1 0;
-        min-width: 0;
-        order: 1;
-      }
       @media (max-width: 720px) {
-        .home-layout {
-          flex-direction: column;
-          gap: 1.5em;
-        }
-        .home-aside,
-        .home-primary {
-          flex: none;
-          width: 100%;
-          min-width: 0;
-        }
         .home-contact {
           padding: 0.75em 0.85em 0.9em;
         }
@@ -146,11 +121,11 @@ const recent5Posts = posts.slice(0, 5);
   </head>
   <body>
     <Header />
-    <main class="home-layout">
-      <div class="home-aside">
+    <main class="with-sidebar">
+      <div class="sidebar-col">
         <TagSidebar />
       </div>
-      <div class="home-primary">
+      <div class="content-col">
         <section aria-label="Prelude">
           <h1 set:html={kSiteIndexTitle} />
           <section class="home-contact" aria-labelledby="home-contact-heading">

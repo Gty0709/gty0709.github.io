@@ -45,11 +45,11 @@ const filteredPosts = searchFilter ? posts.filter(post => post.data.tags && post
   <body>
     <Header />
     {kEnableSearch && <Search />}
-    <main style="display: flex; gap: 2.5em; align-items: flex-start;">
-      <div style="flex: 1 1 0; min-width: 12em; order: 2;">
+    <main class="with-sidebar">
+      <div class="sidebar-col">
         <TagSidebar />
       </div>
-      <div style="flex: 5 1 0; min-width: 0; order: 1;">
+      <div class="content-col">
         <section>
           <ul class={`accent block-list posts${kEnableSearch ? " loading" : ""}`}>
             {

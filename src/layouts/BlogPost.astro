@@ -168,8 +168,13 @@ const pdfArchives = await getCollection("archive");
         line-height: 1.45;
         word-break: break-word;
       }
-      .catalog-link:hover {
+      .catalog-link:hover,
+      .catalog-link:focus-visible {
         background: rgba(127,127,127,0.08);
+      }
+      .catalog-link:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
       }
       .catalog-item.active > .catalog-link {
         color: var(--accent);
@@ -194,11 +199,11 @@ const pdfArchives = await getCollection("archive");
 
   <body>
     <Header articleId={id || undefined} />
-    <main style="display: flex; gap: 2.5em; align-items: flex-start;">
-      <div style="flex: 1 1 0; min-width: 12em; order: 2;">
+    <main class="with-sidebar">
+      <div class="sidebar-col">
         <TagSidebar />
       </div>
-      <div style="flex: 5 1 0; min-width: 0; order: 1;">
+      <div class="content-col">
         <article>
           <div class="prose">
             <section class="title" aria-label="Title">

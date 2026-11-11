@@ -15,8 +15,8 @@ for (const post of posts) {
 const tags = Array.from(tagMap.entries()).sort((a, b) => b[1] - a[1]);
 ---
 <aside class="tag-sidebar">
-  <h3 class="tag-header">Tags <span class="toggle-icon">▼</span></h3>
-  <ul class="tags collapsed">
+  <h3 class="tag-header" role="button" tabindex="0" aria-expanded="false" aria-controls="tag-sidebar-list">Tags <span class="toggle-icon">▼</span></h3>
+  <ul id="tag-sidebar-list" class="tags collapsed">
     {tags.map(([tag, count]) => (
       <li>
         <a href={`${kUrlBase}/article?search=${encodeURIComponent(tag)}`}>{tag}</a>
@@ -33,9 +33,18 @@ const tags = Array.from(tagMap.entries()).sort((a, b) => b[1] - a[1]);
     const toggleIcon = document.querySelector('.toggle-icon');
     
     if (tagHeader && tagList && toggleIcon) {
-      tagHeader.addEventListener('click', () => {
+      const toggleTags = () => {
         tagList.classList.toggle('collapsed');
-        toggleIcon.textContent = tagList.classList.contains('collapsed') ? '▼' : '▲';
+        const open = !tagList.classList.contains('collapsed');
+        toggleIcon.textContent = open ? '▲' : '▼';
+        tagHeader.setAttribute('aria-expanded', open ? 'true' : 'false');
+      };
+      tagHeader.addEventListener('click', toggleTags);
+      tagHeader.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggleTags();
+        }
       });
     }
   });
@@ -115,9 +124,22 @@ const tags = Array.from(tagMap.entries()).sort((a, b) => b[1] - a[1]);
   transition: background 0.2s, color 0.2s;
   font-size: 1em;
 }
-.tag-sidebar .tags a:hover {
+.tag-sidebar .tags a:hover,
+.tag-sidebar .tags a:focus-visible {
   background: var(--accent);
   color: #fff;
+}
+.tag-sidebar .tags a:focus-visible,
+.tag-sidebar .tag-header:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+@media (max-width: 720px) {
+  .tag-sidebar {
+    position: static;
+    top: auto;
+    max-width: none;
+  }
 }
 .tag-sidebar .tag-count {
   font-size: 0.45em; /* 缩小为原来的一半 */

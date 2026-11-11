@@ -96,6 +96,9 @@ h6 :target {
   font-family: var(--chinese-font), var(--english-font), serif;
   scroll-margin-top: 1.25em;
 }
+h1, h2, h3, h4, h5, h6 {
+  text-align: start;
+}
 h1 {
   font-size: 2.75em;
   margin-block-start: 0em;
@@ -297,6 +300,45 @@ figcaption {
   display: grid;
   place-items: center;
   overflow-x: auto;
+}
+/* Upstream tylant #10: style native MathML when a future compiler emits it.
+   Current articles still render equations as SVG frames. */
+math {
+  color: var(--main-color);
+}
+math[display="block"] {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  text-align: center;
+}
+.with-sidebar {
+  display: flex;
+  gap: 2.5em;
+  align-items: flex-start;
+}
+.with-sidebar > .sidebar-col {
+  flex: 1 1 0;
+  min-width: 12em;
+  order: 2;
+}
+.with-sidebar > .content-col {
+  flex: 5 1 0;
+  min-width: 0;
+  order: 1;
+}
+@media (max-width: 720px) {
+  .with-sidebar {
+    flex-direction: column;
+    gap: 1.5em;
+  }
+  .with-sidebar > .sidebar-col,
+  .with-sidebar > .content-col {
+    flex: none;
+    width: 100%;
+    min-width: 0;
+  }
 }
 .block-list,
 .block-list li {
